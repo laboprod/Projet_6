@@ -65,24 +65,3 @@ let épée = new Arme('épée', 30);
 let Roger = new Personnage('Roro', 45);
 let Patrick = new Personnage('Patoche', 50);
 let Gerard = new Personnage('Gege', 35);
-
-console.log(Patrick.arme);
-console.log(Roger.arme);
-console.log(Patrick);
-Patrick.recoitArme(hache);
-console.log(Patrick.arme);
-console.log(Patrick.degatArme);
-console.log(Roger);
-Roger.recoitCoupPar(Patrick);
-Patrick.recoitArme(épée);
-console.log(Roger.pointsDeVie);
-Roger.recoitCoupPar(Patrick);
-Roger.recoitCoupPar(Patrick);
-Roger.recoitCoupPar(Patrick);
-Roger.recoitCoupPar(Patrick);
-Roger.recoitCoupPar(Roger);
-
-/*if (victime.pointsDeVie < attaquant.degatArme) {
-	victime.pointsDeVie = 0;
-}
-return (victime.pointsDeVie -= attaquant.degatArme);*/
