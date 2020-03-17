@@ -7,3 +7,7 @@ table td {
 table {
 	margin: auto;
 }
+
+.blocked-cell {
+	background-color: black;
+}
