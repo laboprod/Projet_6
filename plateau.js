@@ -47,8 +47,6 @@ class Plateau {
 		let tableau = "<table id='plateau'>" + table + '</table>';
 		document.getElementById('container').innerHTML = tableau;
 	}
-
-	genererBlocks() {}
 }
 let plateau = new Plateau(10, 10); //initialiser le plateau avec 10 rangées et 10 colonnes
 plateau.genererPlateau();
