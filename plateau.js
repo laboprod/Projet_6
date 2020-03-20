@@ -45,7 +45,6 @@ class Plateau {
 		if (this.weaponCells.includes(cell)) {
 			this.findFreeCell();
 		}
-
 		return cell;
 	}
 
