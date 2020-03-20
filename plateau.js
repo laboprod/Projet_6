@@ -2,9 +2,10 @@ class Plateau {
 	constructor(rowsQty, colsQty) {
 		this.rowsQty = rowsQty;
 		this.colsQty = colsQty;
-
 		this.usedCells = [];
 		this.blockedCells = [];
+		this.warriorCells = [];
+		this.weaponCells = [];
 	}
 	generer() {
 		let table = '';
@@ -41,13 +42,31 @@ class Plateau {
 		if (this.blockedCells.includes(cell)) {
 			this.findFreeCell();
 		}
+		if (this.weaponCells.includes(cell)) {
+			this.findFreeCell();
+		}
+
 		return cell;
 	}
 
 	cellId(column, row) {
 		return String(column) + String(row);
 	}
+
+	weapon(qty) {
+		for (let i = 0; i < qty; i++) {
+			let cell = this.findFreeCell();
+			this.weaponCells.push(cell);
+			this.usedCells.push(cell);
+			this.weaponCellInView(cell);
+		}
+	}
+
+	weaponCellInView(cellId) {
+		document.getElementById(cellId).classList.add('weapon-cell');
+	}
 }
 let plateau = new Plateau(10, 10); //initialiser le plateau avec 10 rangées et 10 colonnes.
 plateau.generer();
-plateau.blockCells(10);
+plateau.blockCells(5); // cree 5 cases grises
+plateau.weapon(5); // cree 5 armes
