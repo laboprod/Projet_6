@@ -11,3 +11,7 @@ table {
 .blocked-cell {
 	background-color: black;
 }
+
+.weapon-cell {
+	background-color: red;
+}
