@@ -38,11 +38,20 @@ class Plateau {
 		let row = Math.floor(Math.random() * this.rowsQty);
 		let column = Math.floor(Math.random() * this.colsQty);
 		let cell = this.cellId(column, row);
+		let bc = this.blockCells;
+		let wc = this.weaponCells;
 
 		if (this.blockedCells.includes(cell)) {
 			this.findFreeCell();
+		} else {
+			this.blockedCells.push(cell);
 		}
 		if (this.weaponCells.includes(cell)) {
+			this.findFreeCell();
+		} else {
+			this.weaponCells.push(cell);
+		}
+		if (bc.cell === wc.cell) {
 			this.findFreeCell();
 		}
 		return cell;
