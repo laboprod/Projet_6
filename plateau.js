@@ -3,7 +3,7 @@ class Plateau {
 		this.rowsQty = rowsQty;
 		this.colsQty = colsQty;
 		this.usedCells = [];
-		this.blockedCells = [];
+		this.blockCells = [];
 		this.warriorCells = [];
 		this.weaponCells = [];
 	}
@@ -21,38 +21,17 @@ class Plateau {
 		document.getElementById('container').innerHTML = tableau;
 	}
 
-	blockCells(qty) {
-		for (let i = 0; i < qty; i++) {
-			let cell = this.findFreeCell();
-			this.blockedCells.push(cell);
-			this.usedCells.push(cell);
-			this.blockCellInView(cell);
-		}
-	}
-
-	blockCellInView(cellId) {
-		document.getElementById(cellId).classList.add('blocked-cell');
+	colorize(id, cssClass) {
+		document.getElementById(id).classList.add(cssClass);
 	}
 
 	findFreeCell() {
 		let row = Math.floor(Math.random() * this.rowsQty);
 		let column = Math.floor(Math.random() * this.colsQty);
 		let cell = this.cellId(column, row);
-		let bc = this.blockCells;
-		let wc = this.weaponCells;
 
-		if (this.blockedCells.includes(cell)) {
-			this.findFreeCell();
-		} else {
-			this.blockedCells.push(cell);
-		}
-		if (this.weaponCells.includes(cell)) {
-			this.findFreeCell();
-		} else {
-			this.weaponCells.push(cell);
-		}
-		if (bc.cell === wc.cell) {
-			this.findFreeCell();
+		if (this.usedCells.includes(cell)) {
+			return this.findFreeCell();
 		}
 		return cell;
 	}
@@ -61,20 +40,27 @@ class Plateau {
 		return String(column) + String(row);
 	}
 
-	weapon(qty) {
-		for (let i = 0; i < qty; i++) {
-			let cell = this.findFreeCell();
-			this.weaponCells.push(cell);
-			this.usedCells.push(cell);
-			this.weaponCellInView(cell);
-		}
+	placeWeapon(weapon) {
+		let cell = this.findFreeCell();
+		this.weaponCells.push(cell);
+		this.usedCells.push(cell);
+		this.colorize(cell, weapon.nom + '-cell');
 	}
 
-	weaponCellInView(cellId) {
-		document.getElementById(cellId).classList.add('weapon-cell');
+	placeWarrior(warrior) {
+		let cell = this.findFreeCell();
+		this.warriorCells.push(cell);
+		this.usedCells.push(cell);
+		this.colorize(cell, warrior.pseudo + '-cell');
+	}
+
+	place(qty, type) {
+		for (let i = 0; i < qty; i++) {
+			let cell = this.findFreeCell();
+			let key = type + 'Cells';
+			this[key].push(cell);
+			this.usedCells.push(cell);
+			this.colorize(cell, type + '-cell');
+		}
 	}
 }
-let plateau = new Plateau(10, 10); //initialiser le plateau avec 10 rangées et 10 colonnes.
-plateau.generer();
-plateau.blockCells(5); // cree 5 cases grises
-plateau.weapon(5); // cree 5 armes
