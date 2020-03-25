@@ -8,10 +8,22 @@ table {
 	margin: auto;
 }
 
-.blocked-cell {
+.block-cell {
 	background-color: black;
 }
 
 .weapon-cell {
 	background-color: red;
+}
+
+.hache-cell {
+	background-color: green;
+}
+
+.couteau-cell {
+	background-color: yellow;
+}
+
+.Roro-cell {
+	background-color: violet;
 }
