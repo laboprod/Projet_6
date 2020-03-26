@@ -36,6 +36,37 @@ class Plateau {
 		return cell;
 	}
 
+	findUsableCell() {
+		let cell = this.findFreeCell();
+
+		if (this.isNorthFree()) {
+			return cell;
+		}
+
+		if (this.isSouthFree()) {
+			return cell;
+		}
+
+		if (this.isWestFree()) {
+			return cell;
+		}
+
+		if (this.isEastFree()) {
+			return cell;
+		}
+		return this.findUsableCell();
+	}
+
+	isNorthFree() {
+		let northCell = (this.cellId -= 1);
+		if (this.usedCells.includes(northCell)) {
+			return this.findUsableCell();
+		}
+	}
+	isSouthFree() {}
+	isWestFree() {}
+	isEastFree() {}
+
 	cellId(column, row) {
 		return String(column) + String(row);
 	}
