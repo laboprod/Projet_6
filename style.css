@@ -21,18 +21,34 @@ table {
 	background-color: red;
 }
 
-.hache-cell {
+.lightsaber-cell {
 	background-image: url('img/lightsaber.png');
 	background-size: 100% 100%;
 }
 
-.couteau-cell {
+.rifle-cell {
 	background-image: url('img/rifle.png');
 	background-size: 100% 100%;
 }
 
-.Roro-cell {
-	background-color: violet;
+.canon-cell {
+	background-image: url('img/canon.png');
+	background-size: 100% 100%;
+}
+
+.sniper-cell {
+	background-image: url('img/sniper.png');
+	background-size: 100% 100%;
+}
+
+.Yoda-cell {
+	background-image: url('img/yoda.png');
+	background-size: 100% 100%;
+}
+
+.Vador-cell {
+	background-image: url('img/vador.png');
+	background-size: 100% 100%;
 }
 
 .container {
