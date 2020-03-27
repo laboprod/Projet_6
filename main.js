@@ -1,17 +1,19 @@
-// let Roger = new Personnage('Roro', 45);
-// let Patrick = new Personnage('Patoche', 50);
-// let Gerard = new Personnage('Gege', 35);
-
 let plateau = new Plateau(10, 10); //initialiser le plateau avec 10 rangées et 10 colonnes.
 plateau.generer();
 plateau.place(10, 'block'); // cree 10 cases grises
 
-let couteau = new Weapon('couteau', 10);
-let hache = new Weapon('hache', 20);
-let épée = new Weapon('épée', 30);
+let pistol = new Weapon('pistol', 10);
+let rifle = new Weapon('rifle', 20);
+let canon = new Weapon('canon', 30);
+let sniper = new Weapon('sniper', 40);
+let lightsaber = new Weapon('lightsaber', 50);
 
-plateau.placeWeapon(hache);
-plateau.placeWeapon(couteau);
+plateau.placeWeapon(rifle);
+plateau.placeWeapon(canon);
+plateau.placeWeapon(lightsaber);
+plateau.placeWeapon(sniper);
 
-let Roger = new Warrior('Roro', 45);
-plateau.placeWarrior(Roger);
+let player1 = new Player('Yoda', 45);
+let player2 = new Player('Vador', 40);
+plateau.placePlayer(player1);
+plateau.placePlayer(player2);
