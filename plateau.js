@@ -3,8 +3,9 @@ class Plateau {
 		this.rowsQty = rowsQty;
 		this.colsQty = colsQty;
 		this.usedCells = [];
+		this.usableCells = [];
 		this.blockCells = [];
-		this.warriorCells = [];
+		this.playerCells = [];
 		this.weaponCells = [];
 	}
 	generer() {
@@ -58,7 +59,8 @@ class Plateau {
 	}
 
 	isNorthFree() {
-		let northCell = (this.cellId -= 1);
+		let cell = this.cellId(column, row);
+		let northCell = (cell -= 1);
 		if (this.usedCells.includes(northCell)) {
 			return this.findUsableCell();
 		}
@@ -75,14 +77,14 @@ class Plateau {
 		let cell = this.findFreeCell();
 		this.weaponCells.push(cell);
 		this.usedCells.push(cell);
-		this.colorize(cell, weapon.nom + '-cell');
+		this.colorize(cell, weapon.name + '-cell');
 	}
 
-	placeWarrior(warrior) {
+	placePlayer(player) {
 		let cell = this.findFreeCell();
-		this.warriorCells.push(cell);
+		this.playerCells.push(cell);
 		this.usedCells.push(cell);
-		this.colorize(cell, warrior.pseudo + '-cell');
+		this.colorize(cell, player.name + '-cell');
 	}
 
 	place(qty, type) {
