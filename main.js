@@ -17,3 +17,6 @@ let player1 = new Player('Yoda', 45);
 let player2 = new Player('Vador', 40);
 plateau.placePlayer(player1);
 plateau.placePlayer(player2);
+
+$('#currentWeaponP1').text('Arme : ' + player1.weapon.name + ' - Dégâts : ' + player1.weapon.damage);
+$('#currentWeaponP2').text('Arme : ' + player2.weapon.name + ' - Dégâts : ' + player2.weapon.damage);
