@@ -67,7 +67,15 @@ class Plateau {
 			return this.findUsableCell();
 		}
 	}
-	isSouthFree() {}
+	isSouthFree() {
+		let row = Math.floor(Math.random() * this.rowsQty);
+		let column = Math.floor(Math.random() * this.colsQty);
+		let cell = this.cellId(column, row);
+		let southCell = (cell += 1);
+		if (this.usedCells.includes(southCell)) {
+			return this.findUsableCell();
+		}
+	}
 	isWestFree() {}
 	isEastFree() {}
 
