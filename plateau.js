@@ -59,6 +59,8 @@ class Plateau {
 	}
 
 	isNorthFree() {
+		let row = Math.floor(Math.random() * this.rowsQty);
+		let column = Math.floor(Math.random() * this.colsQty);
 		let cell = this.cellId(column, row);
 		let northCell = (cell -= 1);
 		if (this.usedCells.includes(northCell)) {
