@@ -5,7 +5,9 @@ class Player {
 		this.weapon = new Weapon('pistol', 10);
 		this.health = 100;
 		this.nbreCoupRecu = 0;
+		this.defend = false;
 	}
+
 	recoitCoupPar(attaquant) {
 		this.nbreCoupRecu++;
 
@@ -15,17 +17,14 @@ class Player {
 		if (this.name == attaquant.name) {
 			throw new Error('je ne peux pas mattaquer moi-meme');
 		}
-		if (this.age >= 45) {
-			attaquant.weapon.damage * 1.5;
+		if (this.defend === false) {
+			this.health -= attaquant.weapon.damage;
+		} else {
+			this.health -= attaquant.weapon.damage / 2;
 		}
 
 		this.afficher(`
 		${this.name} recoit un coup par ${attaquant.name}`);
-
-		this.health -= attaquant.weapon.damage;
-		$('#pb-player1')
-			.css('width', this.health + '%')
-			.text(this.health);
 
 		if (this.health < 0) {
 			this.health = 0;
