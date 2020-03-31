@@ -1,3 +1,13 @@
+h1 {
+	background-color: #729bec;
+	color: #020303;
+	padding: 20px;
+	text-align: center;
+	border-bottom: 4px #c6d4df solid;
+	margin-bottom: 10px;
+	font-family: 'Motiva Sans', Sans-serif;
+}
+
 table td {
 	border: 1px solid black;
 	padding: 0;
@@ -44,6 +54,7 @@ table {
 .Yoda-cell {
 	background-image: url('img/yoda.png');
 	background-size: 100% 100%;
+	position: relative;
 }
 
 .Vador-cell {
