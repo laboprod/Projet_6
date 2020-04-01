@@ -74,10 +74,9 @@ class Plateau {
 		return true;
 	}
 	isSouthFree(cell) {
-		if (cell % 10 === 0) {
+		if (cell % 2 === 1) {
 			return false;
 		}
-
 		let southCell = cell + 1;
 
 		if (southCell < 10) {
@@ -89,7 +88,7 @@ class Plateau {
 		return true;
 	}
 	isWestFree(cell) {
-		if (cell % 10 === 0) {
+		if (String('0') + 1 <= cell <= String('0') + 9) {
 			return false;
 		}
 
@@ -104,7 +103,7 @@ class Plateau {
 		return true;
 	}
 	isEastFree(cell) {
-		if (cell % 10 === 0) {
+		if (91 <= cell <= 99) {
 			return false;
 		}
 
