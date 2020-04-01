@@ -40,58 +40,98 @@ class Plateau {
 	findUsableCell() {
 		let cell = this.findFreeCell();
 
-		if (this.isNorthFree()) {
+		if (this.isNorthFree(cell)) {
 			return cell;
 		}
 
-		if (this.isSouthFree()) {
+		if (this.isSouthFree(cell)) {
 			return cell;
 		}
 
-		if (this.isWestFree()) {
+		if (this.isWestFree(cell)) {
 			return cell;
 		}
 
-		if (this.isEastFree()) {
+		if (this.isEastFree(cell)) {
 			return cell;
 		}
 		return this.findUsableCell();
 	}
 
-	isNorthFree() {
-		let row = Math.floor(Math.random() * this.rowsQty);
-		let column = Math.floor(Math.random() * this.colsQty);
-		let cell = this.cellId(column, row);
-		let northCell = (cell -= 1);
+	isNorthFree(cell) {
+		if (cell % 10 === 0) {
+			return false;
+		}
+
+		let northCell = cell - 1;
+
+		if (northCell < 10) {
+			northCell = String('0') + String(northCell);
+		}
 		if (this.usedCells.includes(northCell)) {
-			return this.findUsableCell();
+			return false;
 		}
+		return true;
 	}
-	isSouthFree() {
-		let row = Math.floor(Math.random() * this.rowsQty);
-		let column = Math.floor(Math.random() * this.colsQty);
-		let cell = this.cellId(column, row);
-		let southCell = (cell += 1);
+	isSouthFree(cell) {
+		if (cell % 10 === 0) {
+			return false;
+		}
+
+		let southCell = cell + 1;
+
+		if (southCell < 10) {
+			southCell = String('0') + String(southCell);
+		}
 		if (this.usedCells.includes(southCell)) {
-			return this.findUsableCell();
+			return false;
 		}
+		return true;
 	}
-	isWestFree() {}
-	isEastFree() {}
+	isWestFree(cell) {
+		if (cell % 10 === 0) {
+			return false;
+		}
+
+		let westCell = cell - 10;
+
+		if (westCell < 10) {
+			westCell = String('0') + String(westCell);
+		}
+		if (this.usedCells.includes(westCell)) {
+			return false;
+		}
+		return true;
+	}
+	isEastFree(cell) {
+		if (cell % 10 === 0) {
+			return false;
+		}
+
+		let eastCell = cell + 10;
+
+		if (eastCell < 10) {
+			eastCell = String('0') + String(eastCell);
+		}
+		if (this.usedCells.includes(eastCell)) {
+			return false;
+		}
+		return true;
+	}
 
 	cellId(column, row) {
 		return String(column) + String(row);
 	}
 
 	placeWeapon(weapon) {
-		let cell = this.findFreeCell();
+		let cell = this.findUsableCell();
 		this.weaponCells.push(cell);
 		this.usedCells.push(cell);
 		this.colorize(cell, weapon.name + '-cell');
 	}
 
 	placePlayer(player) {
-		let cell = this.findFreeCell();
+		let cell = this.findUsableCell();
 		this.playerCells.push(cell);
 		this.usedCells.push(cell);
 		this.colorize(cell, player.name + '-cell');
