@@ -27,10 +27,6 @@ table {
 	background-size: 100% 100%;
 }
 
-.weapon-cell {
-	background-color: red;
-}
-
 .lightsaber-cell {
 	background-image: url('img/lightsaber.png');
 	background-size: 100% 100%;
