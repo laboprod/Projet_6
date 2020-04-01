@@ -1,30 +1,28 @@
-let playerPosition = 'Yoda-cell'.id;
-
-$(document).keydown(function(e) {
-	if (e.which == 39) {
-		// droite
-		playerPosition += 10;
-	}
-	if (e.which == 37) {
-		// gauche
-		playerPosition -= 10;
-	}
-	if (e.which == 38) {
-		// haut
-		this.playerPosition -= 1;
-	}
-	if (e.which == 40) {
-		// bas
-		this.playerPosition += 1;
-	}
-});
+// $(document).keydown(function(e) {
+// 	if (e.which == 39) {
+// 		// droite
+// 		$('.Yoda-cell') + 10;
+// 	}
+// 	if (e.which == 37) {
+// 		// gauche
+// 		$('.Yoda-cell') - 10;
+// 	}
+// 	if (e.which == 38) {
+// 		// haut
+// 		$('.Yoda-cell') - 1;
+// 	}
+// 	if (e.which == 40) {
+// 		// bas
+// 		$('.Yoda-cell') + 1;
+// 	}
+// });
 
 // $(document).keydown(function(e) {
 // 	let key = e.keyCode || e.which;
 // 	switch (key) {
 // 		case 37:
 // 			//Move left
-// 			$('.Yoda-cell').animate({ left: '-=50px' });
+// 			$('.Yoda-cell') - 10;
 // 			break;
 // 		case 39:
 // 			//-Move right
