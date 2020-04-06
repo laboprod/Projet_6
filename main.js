@@ -13,7 +13,7 @@ $('#startGame1').click(function() {
 
 let plateau = new Plateau(10, 10); //initialiser le plateau avec 10 rangées et 10 colonnes.
 plateau.generer();
-plateau.place(10, 'block'); // cree 10 cases grises
+plateau.placeBlocks(10); // cree 10 cases grises
 
 let pistol = new Weapon('pistol', 10);
 let rifle = new Weapon('rifle', 20);
