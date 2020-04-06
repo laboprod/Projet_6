@@ -17,26 +17,26 @@
 // 	}
 // });
 
-// $(document).keydown(function(e) {
-// 	let key = e.keyCode || e.which;
-// 	switch (key) {
-// 		case 37:
-// 			//Move left
-// 			$('.Yoda-cell') - 10;
-// 			break;
-// 		case 39:
-// 			//-Move right
-// 			$('.Yoda-cell').animate({ left: '+=50px' });
-// 			break;
-// 		case 38:
-// 			//-Move up
-// 			$('.Yoda-cell').animate({ top: '-=50px' });
-// 			break;
-// 		case 40:
-// 			//-Move down
-// 			$('.Yoda-cell').animate({ top: '+=50px' });
-// 			break;
-// 		default:
-// 			break;
-// 	}
-// });
+$(document).keydown(function(e) {
+	let key = e.keyCode || e.which;
+	switch (key) {
+		case 37:
+			//Move left
+			$('.Yoda-cell').animate({ left: '-=50px' });
+			break;
+		case 39:
+			//-Move right
+			$('.Yoda-cell').animate({ left: '+=50px' });
+			break;
+		case 38:
+			//-Move up
+			$('.Yoda-cell').animate({ top: '-=50px' });
+			break;
+		case 40:
+			//-Move down
+			$('.Yoda-cell').animate({ top: '+=50px' });
+			break;
+		default:
+			break;
+	}
+});
