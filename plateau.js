@@ -136,13 +136,22 @@ class Plateau {
 		this.colorize(cell, player.name + '-cell');
 	}
 
-	place(qty, type) {
+	placeBlocks(qty) {
 		for (let i = 0; i < qty; i++) {
 			let cell = this.findFreeCell();
-			let key = type + 'Cells';
-			this[key].push(cell);
+			this.blockCells.push(cell);
 			this.usedCells.push(cell);
-			this.colorize(cell, type + '-cell');
+			this.colorize(cell, 'block-cell');
 		}
 	}
+
+	// place(qty, type) {
+	// 	for (let i = 0; i < qty; i++) {
+	// 		let cell = this.findFreeCell();
+	// 		let key = type + 'Cells';
+	// 		this[key].push(cell);
+	// 		this.usedCells.push(cell);
+	// 		this.colorize(cell, type + '-cell');
+	// 	}
+	// }
 }
