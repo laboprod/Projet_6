@@ -1,3 +1,16 @@
+$('#startGame1').click(function() {
+	// au clic sur le bouton, on execute la fonction
+	player1.name = $('#player1Name').val(); // on récupère le nom saisi dans l'input
+	player2.name = $('#player2Name').val();
+	$('#showNamePlayer1').text(player1.name); // affiche le nom du joueur sous son personnage
+	$('#showNamePlayer2').text(player2.name);
+	$('#currentWeaponP1').text('Arme : ' + player1.weapon.name + ' - Dégâts : ' + player1.weapon.damage); // affiche l'arme actuelle
+	$('#currentWeaponP2').text('Arme : ' + player2.weapon.name + ' - Dégâts : ' + player2.weapon.damage);
+	$('#beforeGameStarts1').hide(); // cache la page où l'on choisi son nom
+	$('#beforeGameStarts2').hide();
+	$('#game').show(); // affiche le jeu
+});
+
 let plateau = new Plateau(10, 10); //initialiser le plateau avec 10 rangées et 10 colonnes.
 plateau.generer();
 plateau.place(10, 'block'); // cree 10 cases grises
@@ -18,5 +31,4 @@ let player2 = new Player('Vador', 40);
 plateau.placePlayer(player1);
 plateau.placePlayer(player2);
 
-$('#currentWeaponP1').text('Arme : ' + player1.weapon.name + ' - Dégâts : ' + player1.weapon.damage);
-$('#currentWeaponP2').text('Arme : ' + player2.weapon.name + ' - Dégâts : ' + player2.weapon.damage);
+$('#restartGame').hide(); // cache le bouton recommencer tant que la partie n'est pas fini
