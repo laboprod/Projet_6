@@ -1,11 +1,15 @@
 h1 {
-	background-color: #729bec;
+	background-image: url('img/banniere2.png');
+	background-size: 100% 100%;
+	height: 300px;
+	margin: 0;
+	/* background-color: #729bec;
 	color: #020303;
 	padding: 20px;
 	text-align: center;
 	border-bottom: 4px #c6d4df solid;
 	margin-bottom: 10px;
-	font-family: 'Motiva Sans', Sans-serif;
+	font-family: 'Motiva Sans', Sans-serif; */
 }
 
 table td {
@@ -62,23 +66,26 @@ table {
 	border-style: none !important;
 }
 
-#player1Name {
-	margin-top: 120px;
-}
-#player2Name {
-	margin-top: 60px;
-}
-#startGame {
-	margin-left: 170px;
+#game {
+	display: none;
+	border: 1px solid slategray;
 }
 
 .player1 {
 	background-image: url('pics/player1.png');
 	background-size: 100% 100%;
+	align-items: center;
 }
 .player2 {
 	background-image: url('pics/player2.png');
 	background-size: 100% 100%;
+	align-items: center;
+}
+
+.highLight {
+	background-color: rgb(196, 82, 82);
+	opacity: 0.8;
+	border-radius: 10%;
 }
 
 .btn {
@@ -88,25 +95,25 @@ table {
 	margin-left: 30px;
 }
 img {
-	margin-left: 40px;
+	align-items: center;
 }
 #showNamePlayer1 {
-	/* font-style: oblique; */
 	font-weight: bold;
-	margin-left: 80px;
+	font-size: 40px;
+	text-align: center;
 	text-shadow: 1px 1px rgb(209, 217, 224);
-	color: #2a2e36;
+	color: #03f417;
 }
 #showNamePlayer2 {
-	/* font-style: oblique; */
 	font-weight: bold;
-	margin-left: 80px;
+	font-size: 40px;
+	text-align: center;
 	text-shadow: 1px 1px rgb(209, 217, 224);
-	color: #2a2e36;
+	color: #ff0000;
 }
 #currentWeaponP1,
 #currentWeaponP2 {
-	margin-left: 40px;
+	text-align: center;
 	font-weight: bold;
 	font-size: 12px;
 	font-style: oblique;
@@ -146,4 +153,137 @@ img {
 	border-radius: 4px;
 	border: 1px solid slategray;
 	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.08);
+}
+
+.content {
+	display: flex;
+	margin: 0;
+}
+
+#beforeGameStarts1 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	width: 50%;
+	background: #ebf5fc;
+}
+.form1 {
+	position: relative;
+	width: 350px;
+	padding: 40px 40px 60px;
+	background: #ebf5fc;
+	border-radius: 10px;
+	text-align: center;
+	box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.8), 5px 5px 10px rgba(0, 0, 0, 0.1);
+}
+.form1 h2 {
+	color: #03f417;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 4px;
+}
+.form1 .input {
+	text-align: left;
+	margin-top: 40px;
+}
+.form1 .input .inputBox {
+	margin-top: 20px;
+}
+.form1 .input .inputBox label {
+	display: block;
+	color: #868686;
+	margin-bottom: 5px;
+	font-size: 18px;
+}
+.form1 .input .inputBox input {
+	width: 100%;
+	height: 50px;
+	background: #ebf5fc;
+	border: none;
+	outline: none;
+	border-radius: 40px;
+	padding: 5px 15px;
+	color: #fff;
+	font-size: 18px;
+	color: #03f417;
+	box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 1), inset 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
+.form1 .input .inputBox input[type='submit'] {
+	cursor: pointer;
+	margin-top: 20px;
+	box-shadow: -2px -2px 6px rgba(255, 255, 255, 1), 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
+.form1 .input .inputBox input[type='submit']:active {
+	color: #03f467;
+	margin-top: 20px;
+	box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 1), inset 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
+.form1 .input .inputBox input::placeholder {
+	color: #555;
+	font-size: 18px;
+}
+
+#beforeGameStarts2 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	width: 50%;
+	background: #131419;
+}
+.form2 {
+	position: relative;
+	width: 350px;
+	padding: 40px 40px 60px;
+	background: #131419;
+	border-radius: 10px;
+	text-align: center;
+	box-shadow: -5px -5px 10px rgba(255, 255, 255, 0.05), 5px 5px 15px rgba(0, 0, 0, 0.5);
+}
+.form2 h2 {
+	color: #ff0000;
+	font-weight: 500;
+	text-transform: uppercase;
+	letter-spacing: 4px;
+}
+.form2 .input {
+	text-align: left;
+	margin-top: 40px;
+}
+.form2 .input .inputBox {
+	margin-top: 20px;
+}
+.form2 .input .inputBox label {
+	display: block;
+	color: #868686;
+	margin-bottom: 5px;
+	font-size: 18px;
+}
+.form2 .input .inputBox input {
+	width: 100%;
+	height: 50px;
+	background: #131419;
+	border: none;
+	outline: none;
+	border-radius: 40px;
+	padding: 5px 15px;
+	color: #fff;
+	font-size: 18px;
+	color: #ff0000;
+	box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+.form2 .input .inputBox input[type='submit'] {
+	cursor: pointer;
+	margin-top: 20px;
+	box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.1), 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+.form2 .input .inputBox input[type='submit']:active {
+	color: #af1212;
+	margin-top: 20px;
+	box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+.form2 .input .inputBox input::placeholder {
+	color: #555;
+	font-size: 18px;
 }
