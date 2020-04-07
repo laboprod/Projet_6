@@ -14,7 +14,6 @@ class Player {
 	}
 
 	nextTurn() {
-		let player;
 		if (count % 2 === 0) {
 			// si c'est chiffre pair, c'est le tour du joueur 1
 			player = player1;
@@ -70,7 +69,7 @@ class Player {
 					.css('width', '0%');
 				$('.showPlayer' + currentPlayerNumber).removeClass('highLight');
 				setTimeout(function() {
-					alert(currentPlayer.name + ' a gagné le combat !');
+					alert(`${currentPlayer.name} a gagné le combat !`);
 				}, 1000);
 				$('#restartGame').show();
 			}
