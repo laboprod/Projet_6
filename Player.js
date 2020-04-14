@@ -1,11 +1,61 @@
 class Player {
-	constructor(name, age) {
+	constructor(name, side) {
 		this.name = name;
-		this.age = age;
+		this.side = side;
 		this.weapon = new Weapon('pistol', 10);
 		this.health = 100;
 		this.nbreCoupRecu = 0;
 		this.defend = false;
+		this.position = null;
+	}
+
+	move() {
+		$(document).keydown(function (e) {
+			if (isEastFree()) {
+				if (e.which == 39) {
+					// droite
+					player.position = player.position + 10;
+					$(player.side).prependTo($(player.position));
+					if (player.position == weapon.position) {
+						getNewWeapon();
+					}
+				}
+			}
+			if (isWestFree()) {
+				if (e.which == 37) {
+					// gauche
+					player.position = player.position - 10;
+					$(player.side).prependTo($(player.position));
+					if (player.position == weapon.position) {
+						getNewWeapon();
+					}
+				}
+			}
+			if (isNorthFree()) {
+				if (e.which == 38) {
+					// haut
+					player.position--;
+					$(player.side).prependTo($(player.position));
+					if (player.position == weapon.position) {
+						getNewWeapon();
+					}
+				}
+			}
+			if (isSouthFree()) {
+				if (e.which == 40) {
+					// bas
+					player.position++;
+					$(player.side).prependTo($(player.position));
+					if (player.position == weapon.position) {
+						getNewWeapon();
+					}
+				}
+			}
+		});
+	}
+
+	getNewWeapon(weapon) {
+		this.weapon = weapon;
 	}
 
 	desactivateButtons() {
@@ -44,7 +94,7 @@ class Player {
 		}
 
 		$('.showPlayer' + currentPlayerNumber).addClass('highLight'); // highlight lesboutons du joueur qui joue
-		$('#player' + currentPlayerNumber + 'Att').click(function() {
+		$('#player' + currentPlayerNumber + 'Att').click(function () {
 			// bouton attaque
 			count++;
 			currentPlayer.defend = false;
@@ -68,13 +118,13 @@ class Player {
 					.text('0')
 					.css('width', '0%');
 				$('.showPlayer' + currentPlayerNumber).removeClass('highLight');
-				setTimeout(function() {
+				setTimeout(function () {
 					alert(`${currentPlayer.name} a gagné le combat !`);
 				}, 1000);
 				$('#restartGame').show();
 			}
 		});
-		$('#player' + currentPlayerNumber + 'Def').click(function() {
+		$('#player' + currentPlayerNumber + 'Def').click(function () {
 			// si on se defend
 			count++;
 			currentPlayer.defend = true;
