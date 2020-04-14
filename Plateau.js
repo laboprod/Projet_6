@@ -127,13 +127,15 @@ class Plateau {
 		this.weaponCells.push(cell);
 		this.usedCells.push(cell);
 		this.colorize(cell, weapon.name + '-cell');
+		weapon.position = cell;
 	}
 
 	placePlayer(player) {
 		let cell = this.findUsableCell();
 		this.playerCells.push(cell);
 		this.usedCells.push(cell);
-		this.colorize(cell, player.name + '-cell');
+		this.colorize(cell, player.side + '-cell');
+		player.position = cell;
 	}
 
 	placeBlocks(qty) {
