@@ -51,13 +51,13 @@ table {
 	background-size: 100% 100%;
 }
 
-.Yoda-cell {
+.jedi-cell {
 	background-image: url('img/yoda.png');
 	background-size: 100% 100%;
 	position: relative;
 }
 
-.Vador-cell {
+.sith-cell {
 	background-image: url('img/vador.png');
 	background-size: 100% 100%;
 }
