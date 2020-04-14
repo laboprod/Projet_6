@@ -1,21 +1,21 @@
-$(document).keydown(function(e) {
-	if (e.which == 39) {
-		// droite
-		$('.Yoda-cell').animate({ left: '+=50px' });
-	}
-	if (e.which == 37) {
-		// gauche
-		$('.Yoda-cell').animate({ left: '-=50px' });
-	}
-	if (e.which == 38) {
-		// haut
-		$('.Yoda-cell').animate({ top: '-=50px' });
-	}
-	if (e.which == 40) {
-		// bas
-		$('.Yoda-cell').animate({ top: '+=50px' });
-	}
-});
+// $(document).keydown(function(e) {
+// 	if (e.which == 39) {
+// 		// droite
+// 		$('.Yoda-cell').animate({ left: '+=50px' });
+// 	}
+// 	if (e.which == 37) {
+// 		// gauche
+// 		$('.Yoda-cell').animate({ left: '-=50px' });
+// 	}
+// 	if (e.which == 38) {
+// 		// haut
+// 		$('.Yoda-cell').animate({ top: '-=50px' });
+// 	}
+// 	if (e.which == 40) {
+// 		// bas
+// 		$('.Yoda-cell').animate({ top: '+=50px' });
+// 	}
+// });
 
 // $(document).keydown(function(e) {
 // 	let key = e.keyCode || e.which;
