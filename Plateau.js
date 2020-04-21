@@ -63,16 +63,24 @@ class Plateau {
 			return false;
 		}
 
-		let northCell = cell - 1;
+		let northCell = this.getCellUp(cell);
 
-		if (northCell < 10) {
-			northCell = String('0') + String(northCell);
-		}
 		if (this.usedCells.includes(northCell)) {
 			return false;
 		}
 		return true;
 	}
+
+	getCellUp(cell) {
+		let cellUp = cell - 1;
+
+		if (cellUp < 10) {
+			cellUp = String('0') + String(cellUp);
+		}
+
+		return cellUp;
+	}
+
 	isSouthFree(cell) {
 		if (cell % 2 === 1) {
 			return false;
@@ -128,6 +136,11 @@ class Plateau {
 		this.usedCells.push(cell);
 		this.colorize(cell, weapon.name + '-cell');
 		weapon.position = cell;
+	}
+
+	movePlayer(player) {
+		this.placePlayer(player).removeClass(player.side + '-cell');
+		this.player.position.addClass(player.side + '-cell');
 	}
 
 	placePlayer(player) {
