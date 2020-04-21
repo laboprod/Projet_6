@@ -52,12 +52,14 @@ table {
 }
 
 .jedi-cell {
+	background-color: #03f417;
 	background-image: url('img/yoda.png');
 	background-size: 100% 100%;
 	position: relative;
 }
 
 .sith-cell {
+	background-color: red;
 	background-image: url('img/vador.png');
 	background-size: 100% 100%;
 }
@@ -80,6 +82,10 @@ table {
 	background-image: url('pics/player2.png');
 	background-size: 100% 100%;
 	align-items: center;
+}
+
+.ath {
+	background-color: rgb(90, 90, 90);
 }
 
 .highLight {
