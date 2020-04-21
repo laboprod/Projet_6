@@ -7,60 +7,61 @@ class Player {
 		this.nbreCoupRecu = 0;
 		this.defend = false;
 		this.position = null;
+		this.myTurn = false;
 	}
 
-	move() {
-		$(document).keydown(function (e) {
-			if (isEastFree()) {
-				if (e.which == 39) {
-					// droite
-					player.position = player.position + 10;
-					$(player.side).prependTo($(player.position));
-					if (player.position == weapon.position) {
-						getNewWeapon();
-					}
-				}
-			}
-			if (isWestFree()) {
-				if (e.which == 37) {
-					// gauche
-					player.position = player.position - 10;
-					$(player.side).prependTo($(player.position));
-					if (player.position == weapon.position) {
-						getNewWeapon();
-					}
-				}
-			}
-			if (isNorthFree()) {
-				if (e.which == 38) {
-					// haut
-					player.position--;
-					$(player.side).prependTo($(player.position));
-					if (player.position == weapon.position) {
-						getNewWeapon();
-					}
-				}
-			}
-			if (isSouthFree()) {
-				if (e.which == 40) {
-					// bas
-					player.position++;
-					$(player.side).prependTo($(player.position));
-					if (player.position == weapon.position) {
-						getNewWeapon();
-					}
-				}
-			}
-		});
-	}
+	// move() {
+	// 	$(document).keydown(function (e) {
+	// 		if (Plateau.isEastFree(this.position)) {
+	// 			if (e.which == 39) {
+	// 				// droite
+	// 				player.position = player.position + 10;
+	// 				$(player.side).prependTo($(player.position));
+	// 				if (player.position == weapon.position) {
+	// 					getNewWeapon();
+	// 				}
+	// 			}
+	// 		}
+	// 		if (isWestFree()) {
+	// 			if (e.which == 37) {
+	// 				// gauche
+	// 				player.position = player.position - 10;
+	// 				$(player.side).prependTo($(player.position));
+	// 				if (player.position == weapon.position) {
+	// 					getNewWeapon();
+	// 				}
+	// 			}
+	// 		}
+	// 		if (isNorthFree()) {
+	// 			if (e.which == 38) {
+	// 				// haut
+	// 				player.position--;
+	// 				$(player.side).prependTo($(player.position));
+	// 				if (player.position == weapon.position) {
+	// 					getNewWeapon();
+	// 				}
+	// 			}
+	// 		}
+	// 		if (isSouthFree()) {
+	// 			if (e.which == 40) {
+	// 				// bas
+	// 				player.position++;
+	// 				$(player.side).prependTo($(player.position));
+	// 				if (player.position == weapon.position) {
+	// 					getNewWeapon();
+	// 				}
+	// 			}
+	// 		}
+	// 	});
+	// }
 
-	getNewWeapon(weapon) {
-		this.weapon = weapon;
-	}
+	// getNewWeapon(weapon) {
+	// 	this.weapon = weapon;
+	// }
 
 	desactivateButtons() {
-		$('#player1Att, #player1Def, #player2Att, #player2Def').off('click');
-		$('.showPlayer1, .showPlayer2').removeClass('highLight');
+		$('#player' + this.side + 'Att', '#player' + this.side + 'Def').off('click');
+		$('.showPlayer' + this.side).removeClass('highLight');
 	}
 
 	nextTurn() {
@@ -129,6 +130,50 @@ class Player {
 			count++;
 			currentPlayer.defend = true;
 			nextTurn();
+		});
+	}
+
+	canMoveUp() {
+		let cell = this.position;
+
+		if (cell % 10 === 0) {
+			return false;
+		}
+
+		let northCell = Plateau.getCellUp(cell);
+
+		if (Plateau.blockCells.includes(northCell)) {
+			return false;
+		}
+		return true;
+	}
+
+	moveUp() {
+		if (!this.canMoveUp()) {
+			alert('En haut tu ne peux pas aller...');
+		}
+		this.position = Plateau.getCellUp(this.position);
+		Plateau.movePlayer(this);
+	}
+
+	play() {
+		this.myTurn = true;
+		$('#ATH' + this.side).addClass('ath');
+		document.addEventListener('keydown', function (e) {
+			switch (e.which) {
+				case 40:
+					this.moveDown();
+					break;
+				case 38:
+					this.moveUp();
+					break;
+				case 37:
+					this.moveLeft();
+					break;
+				case 39:
+					this.moveRight();
+					break;
+			}
 		});
 	}
 }
