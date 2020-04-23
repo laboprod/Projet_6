@@ -1,4 +1,14 @@
 class Player {
+	name;
+	side;
+	weapon;
+	health;
+	nbreCoupRecu;
+	defend;
+	plateau;
+	position;
+	myTurn;
+
 	constructor(name, side) {
 		this.name = name;
 		this.side = side;
@@ -12,7 +22,7 @@ class Player {
 
 	// move() {
 	// 	$(document).keydown(function (e) {
-	// 		if (Plateau.isEastFree(this.position)) {
+	// 		if (plateau.isEastFree(this.position)) {
 	// 			if (e.which == 39) {
 	// 				// droite
 	// 				player.position = player.position + 10;
@@ -58,6 +68,11 @@ class Player {
 	// getNewWeapon(weapon) {
 	// 	this.weapon = weapon;
 	// }
+
+	blockPlayer() {
+		this.myTurn = false;
+		this.desactivateButtons();
+	}
 
 	desactivateButtons() {
 		$('#player' + this.side + 'Att', '#player' + this.side + 'Def').off('click');
@@ -133,16 +148,21 @@ class Player {
 		});
 	}
 
+	place(cell, plateau) {
+		this.position = cell;
+		this.plateau = plateau;
+		this.blockPlayer();
+	}
+
 	canMoveUp() {
 		let cell = this.position;
 
 		if (cell % 10 === 0) {
 			return false;
 		}
+		let northCell = this.plateau.getCellUp(cell);
 
-		let northCell = Plateau.getCellUp(cell);
-
-		if (Plateau.blockCells.includes(northCell)) {
+		if (this.plateau.blockCells.includes(northCell)) {
 			return false;
 		}
 		return true;
@@ -152,26 +172,28 @@ class Player {
 		if (!this.canMoveUp()) {
 			alert('En haut tu ne peux pas aller...');
 		}
-		this.position = Plateau.getCellUp(this.position);
-		Plateau.movePlayer(this);
+		let oldPosition = this.position;
+		let newPosition = this.plateau.getCellUp(oldPosition);
+		this.plateau.movePlayer(this, oldPosition, newPosition);
 	}
 
 	play() {
 		this.myTurn = true;
 		$('#ATH' + this.side).addClass('ath');
-		document.addEventListener('keydown', function (e) {
+		let self = this;
+		document.addEventListener('keydown', (e) => {
 			switch (e.which) {
 				case 40:
-					this.moveDown();
+					self.moveDown();
 					break;
 				case 38:
-					this.moveUp();
+					self.moveUp();
 					break;
 				case 37:
-					this.moveLeft();
+					self.moveLeft();
 					break;
 				case 39:
-					this.moveRight();
+					self.moveRight();
 					break;
 			}
 		});
