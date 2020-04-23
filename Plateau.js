@@ -138,9 +138,9 @@ class Plateau {
 		weapon.position = cell;
 	}
 
-	movePlayer(player) {
-		this.placePlayer(player).removeClass(player.side + '-cell');
-		this.player.position.addClass(player.side + '-cell');
+	movePlayer(player, oldPosition, newPosition) {
+		player.oldPosition.removeClass(player.side + '-cell');
+		player.newPosition.addClass(player.side + '-cell');
 	}
 
 	placePlayer(player) {
@@ -148,7 +148,7 @@ class Plateau {
 		this.playerCells.push(cell);
 		this.usedCells.push(cell);
 		this.colorize(cell, player.side + '-cell');
-		player.position = cell;
+		player.place(cell, this);
 	}
 
 	placeBlocks(qty) {
