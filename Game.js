@@ -40,7 +40,6 @@ class Game {
 		plateau.generer();
 		plateau.placeBlocks(10); // cree 10 cases grises
 
-		let pistol = new Weapon('pistol', 10);
 		let rifle = new Weapon('rifle', 20);
 		let canon = new Weapon('canon', 30);
 		let sniper = new Weapon('sniper', 40);
@@ -50,18 +49,8 @@ class Game {
 		plateau.placeWeapon(canon);
 		plateau.placeWeapon(lightsaber);
 		plateau.placeWeapon(sniper);
-
 		plateau.placePlayer(player1);
 		plateau.placePlayer(player2);
-
-		this.blockPlayers();
 		player1.play();
-	}
-
-	blockPlayers() {
-		for (let i = 0; i < this.players.length; i++) {
-			this.players[i].myTurn = false;
-			this.players[i].desactivateButtons();
-		}
 	}
 }
