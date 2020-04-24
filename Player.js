@@ -174,7 +174,80 @@ class Player {
 		}
 		let oldPosition = this.position;
 		let newPosition = this.plateau.getCellUp(oldPosition);
-		this.plateau.movePlayer(this, oldPosition, newPosition);
+		this.position = newPosition;
+		this.plateau.movePlayer(this, oldPosition);
+	}
+
+	canMoveDown() {
+		let cell = this.position;
+
+		if (cell % 10 === 9) {
+			return false;
+		}
+		let southCell = this.plateau.getCellDown(cell);
+
+		if (this.plateau.blockCells.includes(southCell)) {
+			return false;
+		}
+		return true;
+	}
+
+	moveDown() {
+		if (!this.canMoveDown()) {
+			alert('En bas tu ne peux pas aller...');
+		}
+		let oldPosition = this.position;
+		let newPosition = this.plateau.getCellDown(oldPosition);
+		this.position = newPosition;
+		this.plateau.movePlayer(this, oldPosition);
+	}
+
+	canMoveLeft() {
+		let cell = this.position;
+
+		if (cell <= String('0') + 9) {
+			return false;
+		}
+		let westCell = this.plateau.getCellLeft(cell);
+
+		if (this.plateau.blockCells.includes(westCell)) {
+			return false;
+		}
+		return true;
+	}
+
+	moveLeft() {
+		if (!this.canMoveLeft()) {
+			alert('A gauche tu ne peux pas aller...');
+		}
+		let oldPosition = this.position;
+		let newPosition = this.plateau.getCellLeft(oldPosition);
+		this.position = newPosition;
+		this.plateau.movePlayer(this, oldPosition);
+	}
+
+	canMoveRight() {
+		let cell = this.position;
+
+		if (cell >= 9 + String('0')) {
+			return false;
+		}
+		let eastCell = this.plateau.getCellRight(cell);
+
+		if (this.plateau.blockCells.includes(eastCell)) {
+			return false;
+		}
+		return true;
+	}
+
+	moveRight() {
+		if (!this.canMoveRight()) {
+			alert('A droite tu ne peux pas aller...');
+		}
+		let oldPosition = this.position;
+		let newPosition = this.plateau.getCellRight(oldPosition);
+		this.position = newPosition;
+		this.plateau.movePlayer(this, oldPosition);
 	}
 
 	play() {
