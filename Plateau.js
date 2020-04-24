@@ -82,48 +82,74 @@ class Plateau {
 	}
 
 	isSouthFree(cell) {
-		if (cell % 2 === 1) {
+		if (cell % 10 === 9) {
 			return false;
 		}
-		let southCell = cell + 1;
+		let southCell = this.getCellDown(cell);
 
-		if (southCell < 10) {
-			southCell = String('0') + String(southCell);
-		}
 		if (this.usedCells.includes(southCell)) {
 			return false;
 		}
 		return true;
 	}
+
+	getCellDown(cell) {
+		let cellDown = cell + 1;
+
+		if (cellDown < 10) {
+			cellDown = String('0') + String(cellDown);
+		}
+		return cellDown;
+	}
+
 	isWestFree(cell) {
-		if (String('0') + 1 <= cell <= String('0') + 9) {
+		if (cell <= String('0') + 9) {
 			return false;
 		}
+		// if (String('0') + 1 <= cell <= String('0') + 9) {
+		// 	return false;
+		// }
 
-		let westCell = cell - 10;
+		let westCell = this.getCellLeft(cell);
 
-		if (westCell < 10) {
-			westCell = String('0') + String(westCell);
-		}
 		if (this.usedCells.includes(westCell)) {
 			return false;
 		}
 		return true;
 	}
+
+	getCellLeft(cell) {
+		let cellLeft = cell - 10;
+
+		if (cellLeft < 10) {
+			cellLeft = String('0') + String(cellLeft);
+		}
+		return cellLeft;
+	}
+
 	isEastFree(cell) {
-		if (91 <= cell <= 99) {
+		if (cell >= 9 + String('0')) {
 			return false;
 		}
+		// if (91 <= cell <= 99) {
+		// 	return false;
+		// }
 
-		let eastCell = cell + 10;
+		let eastCell = this.getCellRight(cell);
 
-		if (eastCell < 10) {
-			eastCell = String('0') + String(eastCell);
-		}
 		if (this.usedCells.includes(eastCell)) {
 			return false;
 		}
 		return true;
+	}
+
+	getCellRight(cell) {
+		let cellRight = cell + 10;
+
+		if (cellRight < 10) {
+			cellRight = String('0') + String(cellRight);
+		}
+		return cellRight;
 	}
 
 	cellId(column, row) {
@@ -138,9 +164,11 @@ class Plateau {
 		weapon.position = cell;
 	}
 
-	movePlayer(player, oldPosition, newPosition) {
-		player.oldPosition.removeClass(player.side + '-cell');
-		player.newPosition.addClass(player.side + '-cell');
+	movePlayer(player, oldPosition) {
+		let oldCell = document.getElementById(oldPosition);
+		let newCell = document.getElementById(player.position);
+		oldCell.classList.remove(player.side + '-cell');
+		newCell.classList.add(player.side + '-cell');
 	}
 
 	placePlayer(player) {
