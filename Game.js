@@ -32,7 +32,7 @@ class Game {
 		$('#beforeGameStarts1').hide(); // cache la page où l'on choisi son nom
 		$('#beforeGameStarts2').hide();
 		$('#intro').hide();
-		$('#music')[0].pause();
+		// $('#music')[0].pause();
 		$('#game').fadeIn(2000); // affiche le jeu
 		$('#restartGame').hide(); // cache le bouton recommencer tant que la partie n'est pas fini
 
