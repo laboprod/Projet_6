@@ -2,7 +2,7 @@ class Game {
 	constructor(playersQty = 2) {
 		this.playersQty = playersQty;
 		this.players = [];
-		this.turn = 1;
+		this.turnPlayerIndex = 0;
 	}
 
 	// chooseWhoStarts() {
@@ -36,7 +36,7 @@ class Game {
 		$('#game').fadeIn(2000); // affiche le jeu
 		$('#restartGame').hide(); // cache le bouton recommencer tant que la partie n'est pas fini
 
-		let plateau = new Plateau(10, 10); //initialiser le plateau avec 10 rangées et 10 colonnes.
+		let plateau = new Plateau(10, 10, this); //initialiser le plateau avec 10 rangées et 10 colonnes.
 		plateau.generer();
 		plateau.placeBlocks(10); // cree 10 cases grises
 
@@ -51,6 +51,23 @@ class Game {
 		plateau.placeWeapon(sniper);
 		plateau.placePlayer(player1);
 		plateau.placePlayer(player2);
-		player1.play();
+		document.addEventListener('keydown', (e) => {
+			switch (e.which) {
+				case 40:
+					this.players[this.turnPlayerIndex].moveDown();
+					break;
+				case 38:
+					this.players[this.turnPlayerIndex].moveUp();
+					break;
+				case 37:
+					this.players[this.turnPlayerIndex].moveLeft();
+					break;
+				case 39:
+					this.players[this.turnPlayerIndex].moveRight();
+					break;
+			}
+		});
 	}
+
+	changePlayer() {}
 }
