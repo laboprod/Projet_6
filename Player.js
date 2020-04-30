@@ -7,7 +7,8 @@ class Player {
 	defend;
 	plateau;
 	position;
-	myTurn;
+	moveCount;
+	canPlay;
 
 	constructor(name, side) {
 		this.name = name;
@@ -17,62 +18,13 @@ class Player {
 		this.nbreCoupRecu = 0;
 		this.defend = false;
 		this.position = null;
-		this.myTurn = false;
+		this.moveCount = 0;
+		this.canPlay = false;
 	}
-
-	// move() {
-	// 	$(document).keydown(function (e) {
-	// 		if (plateau.isEastFree(this.position)) {
-	// 			if (e.which == 39) {
-	// 				// droite
-	// 				player.position = player.position + 10;
-	// 				$(player.side).prependTo($(player.position));
-	// 				if (player.position == weapon.position) {
-	// 					getNewWeapon();
-	// 				}
-	// 			}
-	// 		}
-	// 		if (isWestFree()) {
-	// 			if (e.which == 37) {
-	// 				// gauche
-	// 				player.position = player.position - 10;
-	// 				$(player.side).prependTo($(player.position));
-	// 				if (player.position == weapon.position) {
-	// 					getNewWeapon();
-	// 				}
-	// 			}
-	// 		}
-	// 		if (isNorthFree()) {
-	// 			if (e.which == 38) {
-	// 				// haut
-	// 				player.position--;
-	// 				$(player.side).prependTo($(player.position));
-	// 				if (player.position == weapon.position) {
-	// 					getNewWeapon();
-	// 				}
-	// 			}
-	// 		}
-	// 		if (isSouthFree()) {
-	// 			if (e.which == 40) {
-	// 				// bas
-	// 				player.position++;
-	// 				$(player.side).prependTo($(player.position));
-	// 				if (player.position == weapon.position) {
-	// 					getNewWeapon();
-	// 				}
-	// 			}
-	// 		}
-	// 	});
-	// }
 
 	// getNewWeapon(weapon) {
 	// 	this.weapon = weapon;
 	// }
-
-	blockPlayer() {
-		this.myTurn = false;
-		this.desactivateButtons();
-	}
 
 	desactivateButtons() {
 		$('#player' + this.side + 'Att', '#player' + this.side + 'Def').off('click');
@@ -151,10 +103,15 @@ class Player {
 	place(cell, plateau) {
 		this.position = cell;
 		this.plateau = plateau;
-		this.blockPlayer();
+		this.desactivateButtons();
 	}
 
 	canMoveUp() {
+		if (this.moveCount >= 3) {
+			alert('le nombre max de déplacements tu as atteint');
+			return;
+		}
+
 		let cell = this.position;
 
 		if (cell % 10 === 0) {
@@ -162,7 +119,7 @@ class Player {
 		}
 		let northCell = this.plateau.getCellUp(cell);
 
-		if (this.plateau.blockCells.includes(northCell)) {
+		if (this.plateau.blockCells.includes(String(northCell))) {
 			return false;
 		}
 		return true;
@@ -171,14 +128,21 @@ class Player {
 	moveUp() {
 		if (!this.canMoveUp()) {
 			alert('En haut tu ne peux pas aller...');
+			return;
 		}
 		let oldPosition = this.position;
 		let newPosition = this.plateau.getCellUp(oldPosition);
 		this.position = newPosition;
+		this.moveCount++;
 		this.plateau.movePlayer(this, oldPosition);
 	}
 
 	canMoveDown() {
+		if (this.moveCount >= 3) {
+			alert('le nombre max de déplacements tu as atteint');
+			return;
+		}
+
 		let cell = this.position;
 
 		if (cell % 10 === 9) {
@@ -186,7 +150,7 @@ class Player {
 		}
 		let southCell = this.plateau.getCellDown(cell);
 
-		if (this.plateau.blockCells.includes(southCell)) {
+		if (this.plateau.blockCells.includes(String(southCell))) {
 			return false;
 		}
 		return true;
@@ -195,14 +159,21 @@ class Player {
 	moveDown() {
 		if (!this.canMoveDown()) {
 			alert('En bas tu ne peux pas aller...');
+			return;
 		}
 		let oldPosition = this.position;
 		let newPosition = this.plateau.getCellDown(oldPosition);
 		this.position = newPosition;
+		this.moveCount++;
 		this.plateau.movePlayer(this, oldPosition);
 	}
 
 	canMoveLeft() {
+		if (this.moveCount >= 3) {
+			alert('le nombre max de déplacements tu as atteint');
+			return;
+		}
+
 		let cell = this.position;
 
 		if (cell <= String('0') + 9) {
@@ -210,7 +181,7 @@ class Player {
 		}
 		let westCell = this.plateau.getCellLeft(cell);
 
-		if (this.plateau.blockCells.includes(westCell)) {
+		if (this.plateau.blockCells.includes(String(westCell))) {
 			return false;
 		}
 		return true;
@@ -219,14 +190,21 @@ class Player {
 	moveLeft() {
 		if (!this.canMoveLeft()) {
 			alert('A gauche tu ne peux pas aller...');
+			return;
 		}
 		let oldPosition = this.position;
 		let newPosition = this.plateau.getCellLeft(oldPosition);
 		this.position = newPosition;
+		this.moveCount++;
 		this.plateau.movePlayer(this, oldPosition);
 	}
 
 	canMoveRight() {
+		if (this.moveCount >= 3) {
+			alert('le nombre max de déplacements tu as atteint');
+			return;
+		}
+
 		let cell = this.position;
 
 		if (cell >= 9 + String('0')) {
@@ -234,7 +212,7 @@ class Player {
 		}
 		let eastCell = this.plateau.getCellRight(cell);
 
-		if (this.plateau.blockCells.includes(eastCell)) {
+		if (this.plateau.blockCells.includes(String(eastCell))) {
 			return false;
 		}
 		return true;
@@ -243,33 +221,17 @@ class Player {
 	moveRight() {
 		if (!this.canMoveRight()) {
 			alert('A droite tu ne peux pas aller...');
+			return;
 		}
 		let oldPosition = this.position;
 		let newPosition = this.plateau.getCellRight(oldPosition);
 		this.position = newPosition;
+		this.moveCount++;
 		this.plateau.movePlayer(this, oldPosition);
 	}
 
 	play() {
-		this.myTurn = true;
 		$('#ATH' + this.side).addClass('ath');
-		let self = this;
-		document.addEventListener('keydown', (e) => {
-			switch (e.which) {
-				case 40:
-					self.moveDown();
-					break;
-				case 38:
-					self.moveUp();
-					break;
-				case 37:
-					self.moveLeft();
-					break;
-				case 39:
-					self.moveRight();
-					break;
-			}
-		});
 	}
 }
 
