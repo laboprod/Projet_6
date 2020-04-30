@@ -1,5 +1,5 @@
 class Plateau {
-	constructor(rowsQty, colsQty) {
+	constructor(rowsQty, colsQty, game) {
 		this.rowsQty = rowsQty;
 		this.colsQty = colsQty;
 		this.usedCells = [];
@@ -7,6 +7,7 @@ class Plateau {
 		this.blockCells = [];
 		this.playerCells = [];
 		this.weaponCells = [];
+		this.game = game;
 	}
 	generer() {
 		let table = '';
@@ -72,7 +73,7 @@ class Plateau {
 	}
 
 	getCellUp(cell) {
-		let cellUp = cell - 1;
+		let cellUp = parseInt(cell) - 1;
 
 		if (cellUp < 10) {
 			cellUp = String('0') + String(cellUp);
@@ -94,7 +95,7 @@ class Plateau {
 	}
 
 	getCellDown(cell) {
-		let cellDown = cell + 1;
+		let cellDown = parseInt(cell) + 1;
 
 		if (cellDown < 10) {
 			cellDown = String('0') + String(cellDown);
@@ -119,7 +120,7 @@ class Plateau {
 	}
 
 	getCellLeft(cell) {
-		let cellLeft = cell - 10;
+		let cellLeft = parseInt(cell) - 10;
 
 		if (cellLeft < 10) {
 			cellLeft = String('0') + String(cellLeft);
@@ -144,7 +145,7 @@ class Plateau {
 	}
 
 	getCellRight(cell) {
-		let cellRight = cell + 10;
+		let cellRight = parseInt(cell) + 10;
 
 		if (cellRight < 10) {
 			cellRight = String('0') + String(cellRight);
@@ -169,6 +170,10 @@ class Plateau {
 		let newCell = document.getElementById(player.position);
 		oldCell.classList.remove(player.side + '-cell');
 		newCell.classList.add(player.side + '-cell');
+
+		if (player.moveCount >= 3) {
+			this.game.changePlayer();
+		}
 	}
 
 	placePlayer(player) {
