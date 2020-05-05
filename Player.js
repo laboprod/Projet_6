@@ -26,20 +26,6 @@ class Player {
 	// 	this.weapon = weapon;
 	// }
 
-	desactivateButtons() {
-		$('#player' + this.side + 'Att', '#player' + this.side + 'Def').off('click');
-		$('.showPlayer' + this.side).removeClass('highLight');
-	}
-
-	nextTurn() {
-		if (count % 2 === 0) {
-			// si c'est chiffre pair, c'est le tour du joueur 1
-			player = player1;
-		} else {
-			player = player2;
-		}
-	}
-
 	battle(player) {
 		desactivateButtons();
 		if (player === player1) {
@@ -100,43 +86,6 @@ class Player {
 		});
 	}
 
-	place(cell, plateau) {
-		this.position = cell;
-		this.plateau = plateau;
-		this.desactivateButtons();
-	}
-
-	canMoveUp() {
-		if (this.moveCount >= 3) {
-			alert('le nombre max de déplacements tu as atteint');
-			return;
-		}
-
-		let cell = this.position;
-
-		if (cell % 10 === 0) {
-			return false;
-		}
-		let northCell = this.plateau.getCellUp(cell);
-
-		if (this.plateau.blockCells.includes(String(northCell))) {
-			return false;
-		}
-		return true;
-	}
-
-	moveUp() {
-		if (!this.canMoveUp()) {
-			alert('En haut tu ne peux pas aller...');
-			return;
-		}
-		let oldPosition = this.position;
-		let newPosition = this.plateau.getCellUp(oldPosition);
-		this.position = newPosition;
-		this.moveCount++;
-		this.plateau.movePlayer(this, oldPosition);
-	}
-
 	canMoveDown() {
 		if (this.moveCount >= 3) {
 			alert('le nombre max de déplacements tu as atteint');
@@ -154,18 +103,6 @@ class Player {
 			return false;
 		}
 		return true;
-	}
-
-	moveDown() {
-		if (!this.canMoveDown()) {
-			alert('En bas tu ne peux pas aller...');
-			return;
-		}
-		let oldPosition = this.position;
-		let newPosition = this.plateau.getCellDown(oldPosition);
-		this.position = newPosition;
-		this.moveCount++;
-		this.plateau.movePlayer(this, oldPosition);
 	}
 
 	canMoveLeft() {
@@ -187,18 +124,6 @@ class Player {
 		return true;
 	}
 
-	moveLeft() {
-		if (!this.canMoveLeft()) {
-			alert('A gauche tu ne peux pas aller...');
-			return;
-		}
-		let oldPosition = this.position;
-		let newPosition = this.plateau.getCellLeft(oldPosition);
-		this.position = newPosition;
-		this.moveCount++;
-		this.plateau.movePlayer(this, oldPosition);
-	}
-
 	canMoveRight() {
 		if (this.moveCount >= 3) {
 			alert('le nombre max de déplacements tu as atteint');
@@ -218,6 +143,55 @@ class Player {
 		return true;
 	}
 
+	canMoveUp() {
+		if (this.moveCount >= 3) {
+			alert('le nombre max de déplacements tu as atteint');
+			return;
+		}
+
+		let cell = this.position;
+
+		if (cell % 10 === 0) {
+			return false;
+		}
+		let northCell = this.plateau.getCellUp(cell);
+
+		if (this.plateau.blockCells.includes(String(northCell))) {
+			return false;
+		}
+
+		return true;
+	}
+
+	desactivateButtons() {
+		$('#player' + this.side + 'Att', '#player' + this.side + 'Def').off('click');
+		$('.showPlayer' + this.side).removeClass('highLight');
+	}
+
+	moveDown() {
+		if (!this.canMoveDown()) {
+			alert('En bas tu ne peux pas aller...');
+			return;
+		}
+		let oldPosition = this.position;
+		let newPosition = this.plateau.getCellDown(oldPosition);
+		this.position = newPosition;
+		this.moveCount++;
+		this.plateau.movePlayer(this, oldPosition);
+	}
+
+	moveLeft() {
+		if (!this.canMoveLeft()) {
+			alert('A gauche tu ne peux pas aller...');
+			return;
+		}
+		let oldPosition = this.position;
+		let newPosition = this.plateau.getCellLeft(oldPosition);
+		this.position = newPosition;
+		this.moveCount++;
+		this.plateau.movePlayer(this, oldPosition);
+	}
+
 	moveRight() {
 		if (!this.canMoveRight()) {
 			alert('A droite tu ne peux pas aller...');
@@ -230,20 +204,41 @@ class Player {
 		this.plateau.movePlayer(this, oldPosition);
 	}
 
+	moveUp() {
+		if (!this.canMoveUp()) {
+			alert('En haut tu ne peux pas aller...');
+			return;
+		}
+		let oldPosition = this.position;
+		let newPosition = this.plateau.getCellUp(oldPosition);
+		this.position = newPosition;
+		this.moveCount++;
+		this.plateau.movePlayer(this, oldPosition);
+	}
+
+	nextTurn() {
+		if (count % 2 === 0) {
+			// si c'est chiffre pair, c'est le tour du joueur 1
+			player = player1;
+		} else {
+			player = player2;
+		}
+	}
+
+	place(cell, plateau) {
+		this.position = cell;
+		this.plateau = plateau;
+		this.desactivateButtons();
+	}
+
 	play() {
 		$('#ATH' + this.side).addClass('ath');
 	}
-}
 
-// 	turn() {
-// 		if (this.currentPlayer == player1) {
-// 			this.currentEnemy = player1;
-// 			this.currentPlayer = player2;
-// 		} else if (this.currentPlayer == player2) {
-// 			this.currentEnemy = player2;
-// 			this.currentPlayer = player1;
-// 		}
-// 	}
+	resetMoveCount() {
+		this.moveCount = 0;
+	}
+}
 
 // 	recoitCoupPar(attaquant) {
 // 		this.nbreCoupRecu++;
