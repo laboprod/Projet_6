@@ -9,18 +9,9 @@ class Plateau {
 		this.weaponCells = [];
 		this.game = game;
 	}
-	generer() {
-		let table = '';
-		for (let r = 0; r < this.rowsQty; r++) {
-			table += '<tr>';
-			for (let c = 0; c < this.colsQty; c++) {
-				let id = String(c) + String(r);
-				table += "<td id='" + id + "'></td>"; // donner un Identifiant à chaque case du plateau
-			}
-			table += '</tr>';
-		}
-		let tableau = "<table id='plateau'>" + table + '</table>';
-		document.getElementById('container').innerHTML = tableau;
+
+	cellId(column, row) {
+		return String(column) + String(row);
 	}
 
 	colorize(id, cssClass) {
@@ -59,39 +50,18 @@ class Plateau {
 		return this.findUsableCell();
 	}
 
-	isNorthFree(cell) {
-		if (cell % 10 === 0) {
-			return false;
+	generer() {
+		let table = '';
+		for (let r = 0; r < this.rowsQty; r++) {
+			table += '<tr>';
+			for (let c = 0; c < this.colsQty; c++) {
+				let id = String(c) + String(r);
+				table += "<td id='" + id + "'></td>"; // donner un Identifiant à chaque case du plateau
+			}
+			table += '</tr>';
 		}
-
-		let northCell = this.getCellUp(cell);
-
-		if (this.usedCells.includes(northCell)) {
-			return false;
-		}
-		return true;
-	}
-
-	getCellUp(cell) {
-		let cellUp = parseInt(cell) - 1;
-
-		if (cellUp < 10) {
-			cellUp = String('0') + String(cellUp);
-		}
-
-		return cellUp;
-	}
-
-	isSouthFree(cell) {
-		if (cell % 10 === 9) {
-			return false;
-		}
-		let southCell = this.getCellDown(cell);
-
-		if (this.usedCells.includes(southCell)) {
-			return false;
-		}
-		return true;
+		let tableau = "<table id='plateau'>" + table + '</table>';
+		document.getElementById('container').innerHTML = tableau;
 	}
 
 	getCellDown(cell) {
@@ -103,22 +73,6 @@ class Plateau {
 		return cellDown;
 	}
 
-	isWestFree(cell) {
-		if (cell <= String('0') + 9) {
-			return false;
-		}
-		// if (String('0') + 1 <= cell <= String('0') + 9) {
-		// 	return false;
-		// }
-
-		let westCell = this.getCellLeft(cell);
-
-		if (this.usedCells.includes(westCell)) {
-			return false;
-		}
-		return true;
-	}
-
 	getCellLeft(cell) {
 		let cellLeft = parseInt(cell) - 10;
 
@@ -126,6 +80,25 @@ class Plateau {
 			cellLeft = String('0') + String(cellLeft);
 		}
 		return cellLeft;
+	}
+
+	getCellRight(cell) {
+		let cellRight = parseInt(cell) + 10;
+
+		if (cellRight < 10) {
+			cellRight = String('0') + String(cellRight);
+		}
+		return cellRight;
+	}
+
+	getCellUp(cell) {
+		let cellUp = parseInt(cell) - 1;
+
+		if (cellUp < 10) {
+			cellUp = String('0') + String(cellUp);
+		}
+
+		return cellUp;
 	}
 
 	isEastFree(cell) {
@@ -144,25 +117,45 @@ class Plateau {
 		return true;
 	}
 
-	getCellRight(cell) {
-		let cellRight = parseInt(cell) + 10;
-
-		if (cellRight < 10) {
-			cellRight = String('0') + String(cellRight);
+	isNorthFree(cell) {
+		if (cell % 10 === 0) {
+			return false;
 		}
-		return cellRight;
+
+		let northCell = this.getCellUp(cell);
+
+		if (this.usedCells.includes(northCell)) {
+			return false;
+		}
+		return true;
 	}
 
-	cellId(column, row) {
-		return String(column) + String(row);
+	isSouthFree(cell) {
+		if (cell % 10 === 9) {
+			return false;
+		}
+		let southCell = this.getCellDown(cell);
+
+		if (this.usedCells.includes(southCell)) {
+			return false;
+		}
+		return true;
 	}
 
-	placeWeapon(weapon) {
-		let cell = this.findUsableCell();
-		this.weaponCells.push(cell);
-		this.usedCells.push(cell);
-		this.colorize(cell, weapon.name + '-cell');
-		weapon.position = cell;
+	isWestFree(cell) {
+		if (cell <= String('0') + 9) {
+			return false;
+		}
+		// if (String('0') + 1 <= cell <= String('0') + 9) {
+		// 	return false;
+		// }
+
+		let westCell = this.getCellLeft(cell);
+
+		if (this.usedCells.includes(westCell)) {
+			return false;
+		}
+		return true;
 	}
 
 	movePlayer(player, oldPosition) {
@@ -176,6 +169,15 @@ class Plateau {
 		}
 	}
 
+	placeBlocks(qty) {
+		for (let i = 0; i < qty; i++) {
+			let cell = this.findFreeCell();
+			this.blockCells.push(cell);
+			this.usedCells.push(cell);
+			this.colorize(cell, 'block-cell');
+		}
+	}
+
 	placePlayer(player) {
 		let cell = this.findUsableCell();
 		this.playerCells.push(cell);
@@ -184,13 +186,12 @@ class Plateau {
 		player.place(cell, this);
 	}
 
-	placeBlocks(qty) {
-		for (let i = 0; i < qty; i++) {
-			let cell = this.findFreeCell();
-			this.blockCells.push(cell);
-			this.usedCells.push(cell);
-			this.colorize(cell, 'block-cell');
-		}
+	placeWeapon(weapon) {
+		let cell = this.findUsableCell();
+		this.weaponCells.push(cell);
+		this.usedCells.push(cell);
+		this.colorize(cell, weapon.name + '-cell');
+		weapon.position = cell;
 	}
 
 	// place(qty, type) {
