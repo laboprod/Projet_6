@@ -5,15 +5,6 @@ class Game {
 		this.turnPlayerIndex = 0;
 	}
 
-	// chooseWhoStarts() {
-	// 	let playerTurn = 0;
-	// 	playerTurn = Math.floor(Math.random() * 2);
-	// 	if (playerTurn < 1) {
-	// 		player = player1;
-	// 	}
-	// 	player = player2;
-	// }
-
 	isReady() {
 		return this.players.length === this.playersQty;
 	}
@@ -69,5 +60,12 @@ class Game {
 		});
 	}
 
-	changePlayer() {}
+	changePlayer() {
+		this.players[this.turnPlayerIndex].resetMoveCount();
+		if (this.turnPlayerIndex === 0) {
+			this.turnPlayerIndex = 1;
+		} else {
+			this.turnPlayerIndex = 0;
+		}
+	}
 }
