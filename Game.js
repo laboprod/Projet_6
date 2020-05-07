@@ -3,6 +3,7 @@ class Game {
 		this.playersQty = playersQty;
 		this.players = [];
 		this.turnPlayerIndex = 0;
+		this.moveMaxAllowed = 3;
 	}
 
 	isReady() {
@@ -20,6 +21,7 @@ class Game {
 		$('#showNamePlayer2').text(player2.name);
 		$('#currentWeaponP1').text('Arme : ' + player1.weapon.name + ' - Dégâts : ' + player1.weapon.damage); // affiche l'arme actuelle
 		$('#currentWeaponP2').text('Arme : ' + player2.weapon.name + ' - Dégâts : ' + player2.weapon.damage);
+
 		$('#beforeGameStarts1').hide(); // cache la page où l'on choisi son nom
 		$('#beforeGameStarts2').hide();
 		$('#intro').hide();
@@ -43,25 +45,74 @@ class Game {
 		plateau.placePlayer(player1);
 		plateau.placePlayer(player2);
 		document.addEventListener('keydown', (e) => {
+			let player = this.players[this.turnPlayerIndex];
+
+			if (!this.canMove(player)) {
+				return;
+			}
 			switch (e.which) {
 				case 40:
-					this.players[this.turnPlayerIndex].moveDown();
+					player.moveDown();
 					break;
 				case 38:
-					this.players[this.turnPlayerIndex].moveUp();
+					player.moveUp();
 					break;
 				case 37:
-					this.players[this.turnPlayerIndex].moveLeft();
+					player.moveLeft();
 					break;
 				case 39:
-					this.players[this.turnPlayerIndex].moveRight();
+					player.moveRight();
 					break;
 			}
+			console.log(player1.position);
+			console.log(player2.position);
+			$('#movesP1').text('Reste : ' + (this.moveMaxAllowed - player1.moveCount) + ' déplacements ');
+			$('#movesP2').text('Reste : ' + (this.moveMaxAllowed - player2.moveCount) + ' déplacements ');
+
+			this.isEnnemyClose();
+			this.checkWhoCanMove();
 		});
 	}
 
+	isEnnemyClose() {
+		let player = this.players[this.turnPlayerIndex];
+		let player1 = this.players[0];
+		let player2 = this.players[1];
+
+		if (player1.position + 1 == player2.position) {
+			player.battle(player);
+		}
+		if (player1.position - 1 == player2.position) {
+			player.battle(player);
+		}
+		if (player1.position + 10 == player2.position) {
+			player.battle(player);
+		}
+		if (player1.position - 10 == player2.position) {
+			player.battle(player);
+		}
+		return;
+	}
+
+	canMove(player) {
+		if (player.moveCount >= this.moveMaxAllowed) {
+			alert('le nombre max de déplacements tu as atteint');
+			return false;
+		}
+		return true;
+	}
+
+	checkWhoCanMove() {
+		let player = this.players[this.turnPlayerIndex];
+
+		if (player.moveCount >= this.moveMaxAllowed) {
+			this.changePlayer();
+		}
+	}
+
 	changePlayer() {
-		this.players[this.turnPlayerIndex].resetMoveCount();
+		let player = this.players[this.turnPlayerIndex];
+		player.resetMoveCount();
 		if (this.turnPlayerIndex === 0) {
 			this.turnPlayerIndex = 1;
 		} else {
