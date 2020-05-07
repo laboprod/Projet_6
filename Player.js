@@ -3,23 +3,23 @@ class Player {
 	side;
 	weapon;
 	health;
+	attackCount;
 	nbreCoupRecu;
 	defend;
 	plateau;
 	position;
 	moveCount;
-	canPlay;
 
 	constructor(name, side) {
 		this.name = name;
 		this.side = side;
 		this.weapon = new Weapon('pistol', 10);
 		this.health = 100;
+		this.attackCount = 0;
 		this.nbreCoupRecu = 0;
 		this.defend = false;
 		this.position = null;
 		this.moveCount = 0;
-		this.canPlay = false;
 	}
 
 	// getNewWeapon(weapon) {
@@ -27,22 +27,28 @@ class Player {
 	// }
 
 	battle(player) {
-		desactivateButtons();
+		let player1 = game.players[0];
+		let player2 = game.players[1];
+		player.desactivateButtons();
 		if (player === player1) {
-			battleSystem(player1, player2);
+			this.battleSystem(player1, player2);
 		} else {
-			battleSystem(player2, player1);
+			this.battleSystem(player2, player1);
 		}
 	}
 
 	battleSystem(currentPlayer, nextPlayer) {
+		let player = game.players[game.turnPlayerIndex];
+		let player1 = game.players[0];
+		let player2 = game.players[1];
 		let currentPlayerNumber;
 		let nextPlayerNumber;
 
 		if (currentPlayer === player1) {
 			currentPlayerNumber = 1;
 			nextPlayerNumber = 2;
-		} else {
+		}
+		if (currentPlayer === player2) {
 			currentPlayerNumber = 2;
 			nextPlayerNumber = 1;
 		}
@@ -50,7 +56,7 @@ class Player {
 		$('.showPlayer' + currentPlayerNumber).addClass('highLight'); // highlight lesboutons du joueur qui joue
 		$('#player' + currentPlayerNumber + 'Att').click(function () {
 			// bouton attaque
-			count++;
+			currentPlayer.attackCount++;
 			currentPlayer.defend = false;
 			if (nextPlayer.defend === false) {
 				//si le joueur adverse ne se defend pas
@@ -65,7 +71,7 @@ class Player {
 
 			if (nextPlayer.health > 0) {
 				// si le joueur n'est pas mort, on continue le combat en changeant de joueur
-				nextTurn();
+				player.nextTurn();
 			} else {
 				// sinon, combat terminé, proposition de refaire une partie
 				$('#pb-player' + nextPlayerNumber)
@@ -80,18 +86,13 @@ class Player {
 		});
 		$('#player' + currentPlayerNumber + 'Def').click(function () {
 			// si on se defend
-			count++;
+			this.attackCount++;
 			currentPlayer.defend = true;
-			nextTurn();
+			player.nextTurn();
 		});
 	}
 
 	canMoveDown() {
-		if (this.moveCount >= 3) {
-			alert('le nombre max de déplacements tu as atteint');
-			return;
-		}
-
 		let cell = this.position;
 
 		if (cell % 10 === 9) {
@@ -106,11 +107,6 @@ class Player {
 	}
 
 	canMoveLeft() {
-		if (this.moveCount >= 3) {
-			alert('le nombre max de déplacements tu as atteint');
-			return;
-		}
-
 		let cell = this.position;
 
 		if (cell <= String('0') + 9) {
@@ -125,11 +121,6 @@ class Player {
 	}
 
 	canMoveRight() {
-		if (this.moveCount >= 3) {
-			alert('le nombre max de déplacements tu as atteint');
-			return;
-		}
-
 		let cell = this.position;
 
 		if (cell >= 9 + String('0')) {
@@ -144,11 +135,6 @@ class Player {
 	}
 
 	canMoveUp() {
-		if (this.moveCount >= 3) {
-			alert('le nombre max de déplacements tu as atteint');
-			return;
-		}
-
 		let cell = this.position;
 
 		if (cell % 10 === 0) {
@@ -217,7 +203,18 @@ class Player {
 	}
 
 	nextTurn() {
-		if (count % 2 === 0) {
+		let player = game.players[game.turnPlayerIndex];
+		player.resetAttackCount();
+		// if (game.turnPlayerIndex === 0) {
+		// 	game.turnPlayerIndex = 1;
+		// } else {
+		// 	game.turnPlayerIndex = 0;
+		// }
+
+		let player1 = game.players[0];
+		let player2 = game.players[1];
+
+		if (this.attackCount % 2 === 0) {
 			// si c'est chiffre pair, c'est le tour du joueur 1
 			player = player1;
 		} else {
@@ -233,6 +230,10 @@ class Player {
 
 	play() {
 		$('#ATH' + this.side).addClass('ath');
+	}
+
+	resetAttackCount() {
+		this.attackCount = 0;
 	}
 
 	resetMoveCount() {
