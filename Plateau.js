@@ -163,10 +163,6 @@ class Plateau {
 		let newCell = document.getElementById(player.position);
 		oldCell.classList.remove(player.side + '-cell');
 		newCell.classList.add(player.side + '-cell');
-
-		if (player.moveCount >= 3) {
-			this.game.changePlayer();
-		}
 	}
 
 	placeBlocks(qty) {
