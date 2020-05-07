@@ -147,6 +147,15 @@ img {
 	width: 100%;
 }
 
+#movesP1,
+#movesP2 {
+	text-align: center;
+	font-weight: bold;
+	font-size: 12px;
+	font-style: oblique;
+	color: #2a2e36;
+}
+
 #restartGame {
 	margin-left: 200px;
 	margin-bottom: 20px;
