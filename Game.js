@@ -21,7 +21,6 @@ class Game {
 		$('#showNamePlayer2').text(player2.name);
 		$('#currentWeaponP1').text('Arme : ' + player1.weapon.name + ' - Dégâts : ' + player1.weapon.damage); // affiche l'arme actuelle
 		$('#currentWeaponP2').text('Arme : ' + player2.weapon.name + ' - Dégâts : ' + player2.weapon.damage);
-
 		$('#beforeGameStarts1').hide(); // cache la page où l'on choisi son nom
 		$('#beforeGameStarts2').hide();
 		$('#intro').hide();
@@ -37,7 +36,6 @@ class Game {
 		let canon = new Weapon('canon', 30);
 		let sniper = new Weapon('sniper', 40);
 		let lightsaber = new Weapon('lightsaber', 50);
-
 		plateau.placeWeapon(rifle);
 		plateau.placeWeapon(canon);
 		plateau.placeWeapon(lightsaber);
@@ -46,6 +44,7 @@ class Game {
 		plateau.placePlayer(player2);
 		document.addEventListener('keydown', (e) => {
 			let player = this.players[this.turnPlayerIndex];
+			$('#ATH' + this.turnPlayerIndex).addClass('ath');
 
 			if (!this.canMove(player)) {
 				return;
@@ -69,6 +68,7 @@ class Game {
 			$('#movesP1').text('Reste : ' + (this.moveMaxAllowed - player1.moveCount) + ' déplacements ');
 			$('#movesP2').text('Reste : ' + (this.moveMaxAllowed - player2.moveCount) + ' déplacements ');
 
+			// player.getNewWeapon();
 			this.isEnnemyClose();
 			this.checkWhoCanMove();
 		});
@@ -115,8 +115,12 @@ class Game {
 		player.resetMoveCount();
 		if (this.turnPlayerIndex === 0) {
 			this.turnPlayerIndex = 1;
+			$('#ATH1').addClass('ath');
+			$('#ATH0').removeClass('ath');
 		} else {
 			this.turnPlayerIndex = 0;
+			$('#ATH0').addClass('ath');
+			$('#ATH1').removeClass('ath');
 		}
 	}
 }
