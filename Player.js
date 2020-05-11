@@ -22,14 +22,17 @@ class Player {
 		this.moveCount = 0;
 	}
 
-	// getNewWeapon(weapon) {
-	// 	this.weapon = weapon;
-	// }
+	getNewWeapon(weapon) {
+		let player = game.players[game.turnPlayerIndex];
+		if (player.position == weapon.position) {
+			this.weapon = weapon;
+		}
+	}
 
 	battle(player) {
 		let player1 = game.players[0];
 		let player2 = game.players[1];
-		player.desactivateButtons();
+		// desactivateButtons();
 		if (player === player1) {
 			this.battleSystem(player1, player2);
 		} else {
@@ -56,7 +59,8 @@ class Player {
 		$('.showPlayer' + currentPlayerNumber).addClass('highLight'); // highlight lesboutons du joueur qui joue
 		$('#player' + currentPlayerNumber + 'Att').click(function () {
 			// bouton attaque
-			currentPlayer.attackCount++;
+			player.attackCount++;
+			console.log(player.attackCount++);
 			currentPlayer.defend = false;
 			if (nextPlayer.defend === false) {
 				//si le joueur adverse ne se defend pas
@@ -86,7 +90,7 @@ class Player {
 		});
 		$('#player' + currentPlayerNumber + 'Def').click(function () {
 			// si on se defend
-			this.attackCount++;
+			player.attackCount++;
 			currentPlayer.defend = true;
 			player.nextTurn();
 		});
@@ -204,22 +208,23 @@ class Player {
 
 	nextTurn() {
 		let player = game.players[game.turnPlayerIndex];
-		player.resetAttackCount();
-		// if (game.turnPlayerIndex === 0) {
-		// 	game.turnPlayerIndex = 1;
-		// } else {
-		// 	game.turnPlayerIndex = 0;
-		// }
-
 		let player1 = game.players[0];
 		let player2 = game.players[1];
 
-		if (this.attackCount % 2 === 0) {
-			// si c'est chiffre pair, c'est le tour du joueur 1
+		player.resetAttackCount();
+
+		if (player.attackCount >= 1) {
 			player = player1;
 		} else {
 			player = player2;
 		}
+
+		// if (player.attackCount % 2 === 0) {
+		// 	// si c'est chiffre pair, c'est le tour du joueur 1
+		// 	player = player1;
+		// } else {
+		// 	player = player2;
+		// }
 	}
 
 	place(cell, plateau) {
