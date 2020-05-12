@@ -21,6 +21,8 @@ class Game {
 		$('#showNamePlayer2').text(player2.name);
 		$('#currentWeaponP1').text('Arme : ' + player1.weapon.name + ' - Dégâts : ' + player1.weapon.damage); // affiche l'arme actuelle
 		$('#currentWeaponP2').text('Arme : ' + player2.weapon.name + ' - Dégâts : ' + player2.weapon.damage);
+		$('#movesP1').text('Reste : ' + (this.moveMaxAllowed - player1.moveCount) + ' déplacements ');
+		$('#movesP2').text('Reste : ' + (this.moveMaxAllowed - player2.moveCount) + ' déplacements ');
 		$('#beforeGameStarts1').hide(); // cache la page où l'on choisi son nom
 		$('#beforeGameStarts2').hide();
 		$('#intro').hide();
@@ -117,10 +119,14 @@ class Game {
 			this.turnPlayerIndex = 1;
 			$('#ATH1').addClass('ath');
 			$('#ATH0').removeClass('ath');
+			$('.jedi-cell').removeClass('jedi-cellBlink');
+			$('.sith-cell').addClass('sith-cellBlink');
 		} else {
 			this.turnPlayerIndex = 0;
 			$('#ATH0').addClass('ath');
 			$('#ATH1').removeClass('ath');
+			$('.jedi-cell').addClass('jedi-cellBlink');
+			$('.sith-cell').removeClass('sith-cellBlink');
 		}
 	}
 }
