@@ -163,6 +163,8 @@ class Plateau {
 		let newCell = document.getElementById(player.position);
 		oldCell.classList.remove(player.side + '-cell');
 		newCell.classList.add(player.side + '-cell');
+		oldCell.classList.remove(player.side + '-cellBlink');
+		newCell.classList.add(player.side + '-cellBlink');
 	}
 
 	placeBlocks(qty) {
