@@ -58,10 +58,47 @@ table {
 	position: relative;
 }
 
+@keyframes jediBlink {
+	from {
+		background-color: white;
+	}
+	to {
+		background-color: #03f417;
+	}
+}
+
+.jedi-cellBlink {
+	background-color: #03f417;
+	background-image: url('img/yoda.png');
+	background-size: 100% 100%;
+	position: relative;
+	animation-name: jediBlink;
+	animation-duration: 0.5s;
+	animation-iteration-count: infinite;
+}
+
 .sith-cell {
 	background-color: red;
 	background-image: url('img/vador.png');
 	background-size: 100% 100%;
+}
+
+@keyframes sithBlink {
+	from {
+		background-color: white;
+	}
+	to {
+		background-color: red;
+	}
+}
+
+.sith-cellBlink {
+	background-color: red;
+	background-image: url('img/vador.png');
+	background-size: 100% 100%;
+	animation-name: sithBlink;
+	animation-duration: 0.5s;
+	animation-iteration-count: infinite;
 }
 
 .container {
