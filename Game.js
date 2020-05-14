@@ -17,12 +17,12 @@ class Game {
 	start() {
 		let player1 = this.players[0];
 		let player2 = this.players[1];
-		$('#showNamePlayer1').text(player1.name); // affiche le nom du joueur sous son personnage
-		$('#showNamePlayer2').text(player2.name);
-		$('#currentWeaponP1').text('Arme : ' + player1.weapon.name + ' - Dégâts : ' + player1.weapon.damage); // affiche l'arme actuelle
-		$('#currentWeaponP2').text('Arme : ' + player2.weapon.name + ' - Dégâts : ' + player2.weapon.damage);
-		$('#movesP1').text('Reste : ' + (this.moveMaxAllowed - player1.moveCount) + ' déplacements ');
-		$('#movesP2').text('Reste : ' + (this.moveMaxAllowed - player2.moveCount) + ' déplacements ');
+		$('#showNamePlayer0').text(player1.name); // affiche le nom du joueur sous son personnage
+		$('#showNamePlayer1').text(player2.name);
+		$('#currentWeaponP0').text('Arme : ' + player1.weapon.name + ' - Dégâts : ' + player1.weapon.damage); // affiche l'arme actuelle
+		$('#currentWeaponP1').text('Arme : ' + player2.weapon.name + ' - Dégâts : ' + player2.weapon.damage);
+		$('#movesP0').text('Reste : ' + (this.moveMaxAllowed - player1.moveCount) + ' déplacements ');
+		$('#movesP1').text('Reste : ' + (this.moveMaxAllowed - player2.moveCount) + ' déplacements ');
 		$('#beforeGameStarts1').hide(); // cache la page où l'on choisi son nom
 		$('#beforeGameStarts2').hide();
 		$('#intro').hide();
@@ -44,6 +44,14 @@ class Game {
 		plateau.placeWeapon(sniper);
 		plateau.placePlayer(player1);
 		plateau.placePlayer(player2);
+		console.log(lightsaber.position);
+		console.log(player1.position);
+		this.play();
+	}
+
+	play() {
+		let player1 = this.players[0];
+		let player2 = this.players[1];
 		document.addEventListener('keydown', (e) => {
 			let player = this.players[this.turnPlayerIndex];
 			$('#ATH' + this.turnPlayerIndex).addClass('ath');
@@ -65,35 +73,44 @@ class Game {
 					player.moveRight();
 					break;
 			}
-			console.log(player1.position);
-			console.log(player2.position);
-			$('#movesP1').text('Reste : ' + (this.moveMaxAllowed - player1.moveCount) + ' déplacements ');
-			$('#movesP2').text('Reste : ' + (this.moveMaxAllowed - player2.moveCount) + ' déplacements ');
 
-			// player.getNewWeapon();
-			this.isEnnemyClose();
+			$('#movesP0').text('Reste : ' + (this.moveMaxAllowed - player1.moveCount) + ' déplacements ');
+			$('#movesP1').text('Reste : ' + (this.moveMaxAllowed - player2.moveCount) + ' déplacements ');
+
+			if (this.isEnnemyClose()) {
+				player.battle();
+			}
+
+			// this.getNewWeapon();
 			this.checkWhoCanMove();
 		});
 	}
 
-	isEnnemyClose() {
+	getNewWeapon() {
 		let player = this.players[this.turnPlayerIndex];
+		let lightsaber = new Weapon('lightsaber', 50);
+		if (player.position == lightsaber.position) {
+			player.weapon = lightsaber;
+		}
+	}
+
+	isEnnemyClose() {
 		let player1 = this.players[0];
 		let player2 = this.players[1];
 
 		if (player1.position + 1 == player2.position) {
-			player.battle(player);
+			return true;
 		}
 		if (player1.position - 1 == player2.position) {
-			player.battle(player);
+			return true;
 		}
 		if (player1.position + 10 == player2.position) {
-			player.battle(player);
+			return true;
 		}
 		if (player1.position - 10 == player2.position) {
-			player.battle(player);
+			return true;
 		}
-		return;
+		return false;
 	}
 
 	canMove(player) {
@@ -109,12 +126,11 @@ class Game {
 
 		if (player.moveCount >= this.moveMaxAllowed) {
 			this.changePlayer();
+			player.resetMoveCount();
 		}
 	}
 
 	changePlayer() {
-		let player = this.players[this.turnPlayerIndex];
-		player.resetMoveCount();
 		if (this.turnPlayerIndex === 0) {
 			this.turnPlayerIndex = 1;
 			$('#ATH1').addClass('ath');
@@ -128,5 +144,14 @@ class Game {
 			$('.jedi-cell').addClass('jedi-cellBlink');
 			$('.sith-cell').removeClass('sith-cellBlink');
 		}
+	}
+
+	getPassivePlayer() {
+		let activePlayerIndex = this.turnPlayerIndex;
+
+		if (activePlayerIndex === 0) {
+			return this.players[1];
+		}
+		return this.players[0];
 	}
 }
