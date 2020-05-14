@@ -68,7 +68,36 @@
 			<div class="row">
 				<div class="col-lg-3 col-sm-6" id="ATH0">
 					<img src="img/player1.png" alt="" width="200" height="300" id="img-player1" />
-					<p id="showNamePlayer1">Player 1</p>
+					<p id="showNamePlayer0">Player 1</p>
+					<p id="currentWeaponP0"></p>
+					<div class="showPlayer0">
+						<button type="button" class="btn btn-secondary btn-sm" id="player0Att">Attaquer</button>
+						<button type="button" class="btn btn-warning btn-sm" id="player0Def">Se défendre</button>
+					</div>
+					<div class="progress">
+						<div
+							class="progress-bar"
+							id="pb-player0"
+							role="progressbar"
+							style="width: 100%;"
+							aria-valuenow="25"
+							aria-valuemin="0"
+							aria-valuemax="100"
+						>
+							100
+						</div>
+					</div>
+					<p id="movesP0"></p>
+				</div>
+				<div class="col-lg-6 col-sm-12">
+					<div id="container"></div>
+					<div id="tableau"></div>
+
+					<button value="Refresh Page" id="restartGame" onClick="location.href=location.href">Recommencer le jeu</button>
+				</div>
+				<div class="col-lg-3 col-sm-6" id="ATH1">
+					<img src="img/player2.png" alt="" width="200" height="300" id="img-player2" />
+					<p id="showNamePlayer1">Player 2</p>
 					<p id="currentWeaponP1"></p>
 					<div class="showPlayer1">
 						<button type="button" class="btn btn-secondary btn-sm" id="player1Att">Attaquer</button>
@@ -88,35 +117,6 @@
 						</div>
 					</div>
 					<p id="movesP1"></p>
-				</div>
-				<div class="col-lg-6 col-sm-12">
-					<div id="container"></div>
-					<div id="tableau"></div>
-
-					<button value="Refresh Page" id="restartGame" onClick="location.href=location.href">Recommencer le jeu</button>
-				</div>
-				<div class="col-lg-3 col-sm-6" id="ATH1">
-					<img src="img/player2.png" alt="" width="200" height="300" id="img-player2" />
-					<p id="showNamePlayer2">Player 2</p>
-					<p id="currentWeaponP2"></p>
-					<div class="showPlayer2">
-						<button type="button" class="btn btn-secondary btn-sm" id="player2Att">Attaquer</button>
-						<button type="button" class="btn btn-warning btn-sm" id="player2Def">Se défendre</button>
-					</div>
-					<div class="progress">
-						<div
-							class="progress-bar"
-							id="pb-player2"
-							role="progressbar"
-							style="width: 100%;"
-							aria-valuenow="25"
-							aria-valuemin="0"
-							aria-valuemax="100"
-						>
-							100
-						</div>
-					</div>
-					<p id="movesP2"></p>
 				</div>
 			</div>
 		</div>
