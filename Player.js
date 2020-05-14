@@ -4,96 +4,93 @@ class Player {
 	weapon;
 	health;
 	attackCount;
-	nbreCoupRecu;
+	attack;
 	defend;
 	plateau;
 	position;
 	moveCount;
+	id;
 
-	constructor(name, side) {
+	constructor(name, side, playerId) {
 		this.name = name;
 		this.side = side;
 		this.weapon = new Weapon('pistol', 10);
 		this.health = 100;
 		this.attackCount = 0;
-		this.nbreCoupRecu = 0;
-		this.defend = false;
+		this.attack = false;
+		this.defend = true;
 		this.position = null;
 		this.moveCount = 0;
+		this.id = playerId;
 	}
 
-	getNewWeapon(weapon) {
-		let player = game.players[game.turnPlayerIndex];
-		if (player.position == weapon.position) {
-			this.weapon = weapon;
-		}
-	}
+	attack() {
+		this.attack = true;
+		this.attackCount++;
 
-	battle(player) {
-		let player1 = game.players[0];
-		let player2 = game.players[1];
-		// desactivateButtons();
-		if (player === player1) {
-			this.battleSystem(player1, player2);
+		let nextPlayer = game.getPassivePlayer();
+
+		if (!nextPlayer.defend) {
+			//si le joueur adverse ne se defend pas
+			nextPlayer.health = nextPlayer.health - this.weapon.damage;
 		} else {
-			this.battleSystem(player2, player1);
+			//si le joueur adverse se defend
+			nextPlayer.health = nextPlayer.health - this.weapon.damage / 2;
 		}
+		$('#pb-player' + nextPlayerNumber)
+			.css('width', nextPlayer.health + '%')
+			.text(nextPlayer.health); // met a jour la barre de vie
 	}
 
-	battleSystem(currentPlayer, nextPlayer) {
-		let player = game.players[game.turnPlayerIndex];
-		let player1 = game.players[0];
-		let player2 = game.players[1];
-		let currentPlayerNumber;
-		let nextPlayerNumber;
-
-		if (currentPlayer === player1) {
-			currentPlayerNumber = 1;
-			nextPlayerNumber = 2;
+	canAttack() {
+		if (this.attackCount > 0) {
+			return false;
 		}
-		if (currentPlayer === player2) {
-			currentPlayerNumber = 2;
-			nextPlayerNumber = 1;
-		}
+		return true;
+	}
 
-		$('.showPlayer' + currentPlayerNumber).addClass('highLight'); // highlight lesboutons du joueur qui joue
+	battle() {
+		let currentPlayerNumber = this.id;
+		let nextPlayer = game.getPassivePlayer();
+
+		// desactivateButtons();
+
+		$('.showPlayer' + currentPlayerNumber).addClass('highLight'); // highlight en jaune les boutons du joueur qui joue
 		$('#player' + currentPlayerNumber + 'Att').click(function () {
-			// bouton attaque
-			player.attackCount++;
-			console.log(player.attackCount++);
-			currentPlayer.defend = false;
-			if (nextPlayer.defend === false) {
-				//si le joueur adverse ne se defend pas
-				nextPlayer.health = nextPlayer.health - currentPlayer.weapon.damage;
-			} else {
-				//si le joueur adverse se defend
-				nextPlayer.health = nextPlayer.health - currentPlayer.weapon.damage / 2;
+			this.attack = false;
+
+			if (this.canAttack()) {
+				this.attack();
+				this.resetAttackCount();
 			}
-			$('#pb-player' + nextPlayerNumber)
-				.css('width', nextPlayer.health + '%')
-				.text(nextPlayer.health); // met a jour la barre de vie
 
 			if (nextPlayer.health > 0) {
-				// si le joueur n'est pas mort, on continue le combat en changeant de joueur
-				player.nextTurn();
+				this.resetAttackCount();
+				game.changePlayer();
 			} else {
-				// sinon, combat terminé, proposition de refaire une partie
-				$('#pb-player' + nextPlayerNumber)
-					.text('0')
-					.css('width', '0%');
-				$('.showPlayer' + currentPlayerNumber).removeClass('highLight');
-				setTimeout(function () {
-					alert(`${currentPlayer.name} a gagné le combat !`);
-				}, 1000);
-				$('#restartGame').show();
+				this.win();
 			}
 		});
 		$('#player' + currentPlayerNumber + 'Def').click(function () {
 			// si on se defend
-			player.attackCount++;
-			currentPlayer.defend = true;
-			player.nextTurn();
+			this.attackCount++;
+			this.defend = true;
+			game.changePlayer();
 		});
+	}
+
+	win() {
+		let nextPlayerNumber = nextPlayer.id;
+		let currentPlayerNumber = this.id;
+
+		$('#pb-player' + nextPlayerNumber)
+			.text('0')
+			.css('width', '0%');
+		$('.showPlayer' + currentPlayerNumber).removeClass('highLight');
+		setTimeout(function () {
+			alert(`${this.name} a gagné le combat !`);
+		}, 1000);
+		$('#restartGame').show();
 	}
 
 	canMoveDown() {
@@ -206,35 +203,10 @@ class Player {
 		this.plateau.movePlayer(this, oldPosition);
 	}
 
-	nextTurn() {
-		let player = game.players[game.turnPlayerIndex];
-		let player1 = game.players[0];
-		let player2 = game.players[1];
-
-		player.resetAttackCount();
-
-		if (player.attackCount >= 1) {
-			player = player1;
-		} else {
-			player = player2;
-		}
-
-		// if (player.attackCount % 2 === 0) {
-		// 	// si c'est chiffre pair, c'est le tour du joueur 1
-		// 	player = player1;
-		// } else {
-		// 	player = player2;
-		// }
-	}
-
 	place(cell, plateau) {
 		this.position = cell;
 		this.plateau = plateau;
 		this.desactivateButtons();
-	}
-
-	play() {
-		$('#ATH' + this.side).addClass('ath');
 	}
 
 	resetAttackCount() {
