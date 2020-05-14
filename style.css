@@ -139,22 +139,22 @@ table {
 img {
 	align-items: center;
 }
-#showNamePlayer1 {
+#showNamePlayer0 {
 	font-weight: bold;
 	font-size: 40px;
 	text-align: center;
 	text-shadow: 1px 1px rgb(209, 217, 224);
 	color: #03f417;
 }
-#showNamePlayer2 {
+#showNamePlayer1 {
 	font-weight: bold;
 	font-size: 40px;
 	text-align: center;
 	text-shadow: 1px 1px rgb(209, 217, 224);
 	color: #ff0000;
 }
-#currentWeaponP1,
-#currentWeaponP2 {
+#currentWeaponP0,
+#currentWeaponP1 {
 	text-align: center;
 	font-weight: bold;
 	font-size: 12px;
@@ -162,7 +162,7 @@ img {
 	color: #2a2e36;
 }
 
-#pb-player1 {
+#pb-player0 {
 	padding: 6px 0px;
 	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.08);
 	background-color: green;
@@ -173,7 +173,7 @@ img {
 	width: 100%;
 }
 
-#pb-player2 {
+#pb-player1 {
 	padding: 6px 0px;
 	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.08);
 	background-color: red;
@@ -184,8 +184,8 @@ img {
 	width: 100%;
 }
 
-#movesP1,
-#movesP2 {
+#movesP0,
+#movesP1 {
 	text-align: center;
 	font-weight: bold;
 	font-size: 12px;
