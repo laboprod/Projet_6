@@ -34,10 +34,10 @@ class Game {
 	}
 
 	createWeapons() {
-		this.weapons.push(new Weapon('rifle', 20, 2));
-		this.weapons.push(new Weapon('canon', 30, 3));
-		this.weapons.push(new Weapon('sniper', 40, 4));
-		this.weapons.push(new Weapon('lightsaber', 50, 5));
+		this.weapons.push(new Weapon('rifle', 20));
+		this.weapons.push(new Weapon('canon', 30));
+		this.weapons.push(new Weapon('sniper', 40));
+		this.weapons.push(new Weapon('lightsaber', 50));
 
 		for (let index in this.weapons) {
 			this.plateau.placeWeapon(this.weapons[index]);
