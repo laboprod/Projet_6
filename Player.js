@@ -25,16 +25,17 @@ class Player {
 		this.attack = true;
 		this.attackCount++;
 
+		let currentPlayer = game.currentPlayer;
 		let nextPlayer = game.otherPlayer;
 
 		if (!nextPlayer.defend) {
 			//si le joueur adverse ne se defend pas
-			nextPlayer.health = nextPlayer.health - this.weapon.damage;
+			nextPlayer.health = nextPlayer.health - currentPlayer.weapon.damage;
 		} else {
 			//si le joueur adverse se defend
-			nextPlayer.health = nextPlayer.health - this.weapon.damage / 2;
+			nextPlayer.health = nextPlayer.health - currentPlayer.weapon.damage / 2;
 		}
-		$('#pb-player' + nextPlayerNumber)
+		$('#' + nextPlayer + ' #pb-player')
 			.css('width', nextPlayer.health + '%')
 			.text(nextPlayer.health); // met a jour la barre de vie
 	}
