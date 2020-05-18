@@ -12,7 +12,7 @@ class Player {
 	constructor(name, id) {
 		this.name = name;
 		this.id = id;
-		this.weapon = new Weapon('pistol', 10, 1);
+		this.weapon = new Weapon('pistol', 10);
 		this.health = 100;
 		this.attackCount = 0;
 		this.attack = false;
