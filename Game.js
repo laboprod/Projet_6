@@ -2,118 +2,182 @@ class Game {
 	constructor(playersQty = 2) {
 		this.playersQty = playersQty;
 		this.players = [];
+		this.weapons = [];
 		this.turnPlayerIndex = 0;
 		this.moveMaxAllowed = 3;
+		this.plateau = null;
+		this.fighting = false;
+	}
+
+	get currentPlayer() {
+		return this.players[this.turnPlayerIndex];
+	}
+
+	get otherPlayer() {
+		if (this.turnPlayerIndex === 0) {
+			return this.players[1];
+		}
+
+		return this.players[0];
 	}
 
 	isReady() {
 		return this.players.length === this.playersQty;
 	}
 
+	battle() {
+		this.fighting = true;
+	}
+
 	addPlayer(player) {
 		this.players.push(player);
 	}
 
-	start() {
-		let player1 = this.players[0];
-		let player2 = this.players[1];
-		$('#showNamePlayer0').text(player1.name); // affiche le nom du joueur sous son personnage
-		$('#showNamePlayer1').text(player2.name);
-		$('#currentWeaponP0').text('Arme : ' + player1.weapon.name + ' - Dégâts : ' + player1.weapon.damage); // affiche l'arme actuelle
-		$('#currentWeaponP1').text('Arme : ' + player2.weapon.name + ' - Dégâts : ' + player2.weapon.damage);
-		$('#movesP0').text('Reste : ' + (this.moveMaxAllowed - player1.moveCount) + ' déplacements ');
-		$('#movesP1').text('Reste : ' + (this.moveMaxAllowed - player2.moveCount) + ' déplacements ');
-		$('#beforeGameStarts1').hide(); // cache la page où l'on choisi son nom
-		$('#beforeGameStarts2').hide();
+	createWeapons() {
+		this.weapons.push(new Weapon('rifle', 20, 2));
+		this.weapons.push(new Weapon('canon', 30, 3));
+		this.weapons.push(new Weapon('sniper', 40, 4));
+		this.weapons.push(new Weapon('lightsaber', 50, 5));
+
+		for (let index in this.weapons) {
+			this.plateau.placeWeapon(this.weapons[index]);
+		}
+	}
+
+	displayPlayers() {
+		for (let player of this.players) {
+			$('#' + player.id + ' .playerName').text(player.name);
+			$('#' + player.id + ' .weapon').text('Arme : ' + player.weapon.name + ' - Dégâts : ' + player.weapon.damage);
+
+			this.plateau.placePlayer(player);
+		}
+	}
+
+	highlightCurrentPlayer() {
+		$('#' + this.currentPlayer.id).addClass('highlight-current-player');
+		$('#' + this.currentPlayer.id + ' .moves').text('Reste : ' + (this.moveMaxAllowed - this.currentPlayer.moveCount) + ' déplacements ');
+	}
+
+	intro() {
 		$('#intro').hide();
 		// $('#music')[0].pause();
 		$('#game').fadeIn(2000); // affiche le jeu
 		$('#restartGame').hide(); // cache le bouton recommencer tant que la partie n'est pas fini
-
-		let plateau = new Plateau(10, 10, this); //initialiser le plateau avec 10 rangées et 10 colonnes.
-		plateau.generer();
-		plateau.placeBlocks(10); // cree 10 cases grises
-
-		let rifle = new Weapon('rifle', 20);
-		let canon = new Weapon('canon', 30);
-		let sniper = new Weapon('sniper', 40);
-		let lightsaber = new Weapon('lightsaber', 50);
-		plateau.placeWeapon(rifle);
-		plateau.placeWeapon(canon);
-		plateau.placeWeapon(lightsaber);
-		plateau.placeWeapon(sniper);
-		plateau.placePlayer(player1);
-		plateau.placePlayer(player2);
-		console.log(lightsaber.position);
-		console.log(player1.position);
-		this.play();
 	}
 
-	play() {
-		let player1 = this.players[0];
-		let player2 = this.players[1];
-		document.addEventListener('keydown', (e) => {
-			let player = this.players[this.turnPlayerIndex];
-			$('#ATH' + this.turnPlayerIndex).addClass('ath');
+	start() {
+		this.intro();
 
-			if (!this.canMove(player)) {
-				return;
-			}
-			switch (e.which) {
-				case 40:
-					player.moveDown();
-					break;
-				case 38:
-					player.moveUp();
-					break;
-				case 37:
-					player.moveLeft();
-					break;
-				case 39:
-					player.moveRight();
-					break;
-			}
+		this.plateau = new Plateau(10, 10, this); //initialiser le plateau avec 10 rangées et 10 colonnes.
+		this.plateau.generer();
+		this.plateau.placeBlocks(10); // cree 10 cases grises
 
-			$('#movesP0').text('Reste : ' + (this.moveMaxAllowed - player1.moveCount) + ' déplacements ');
-			$('#movesP1').text('Reste : ' + (this.moveMaxAllowed - player2.moveCount) + ' déplacements ');
+		this.createWeapons();
+		this.displayPlayers();
 
-			if (this.isEnnemyClose()) {
-				player.battle();
-			}
+		$('#nameform1').hide(); // cache la page où l'on choisi son nom
+		$('#nameform2').hide();
 
-			// this.getNewWeapon();
-			this.checkWhoCanMove();
+		this.highlightCurrentPlayer();
+
+		document.addEventListener('keydown', (e) => this.listenForKeyStroke(e));
+	}
+
+	listenForKeyStroke(e) {
+		if (!this.canMove(this.currentPlayer)) {
+			return;
+		}
+		switch (e.which) {
+			case 40:
+				this.currentPlayer.moveDown();
+				break;
+			case 38:
+				this.currentPlayer.moveUp();
+				break;
+			case 37:
+				this.currentPlayer.moveLeft();
+				break;
+			case 39:
+				this.currentPlayer.moveRight();
+				break;
+		}
+
+		this.highlightCurrentPlayer();
+		this.getNewWeapon();
+
+		if (this.isEnnemyClose()) {
+			this.battle();
+			return;
+		}
+
+		if (this.currentPlayer.moveCount >= this.moveMaxAllowed) {
+			this.changePlayer();
+			this.highlightCurrentPlayer();
+		}
+	}
+
+	refreshPlayer() {
+		for (let player of this.players) {
+			$('#' + player.id + ' .playerName').text(player.name);
+			$('#' + player.id + ' .weapon').text('Arme : ' + player.weapon.name + ' - Dégâts : ' + player.weapon.damage);
+		}
+	}
+
+	changeWeapon(newWeapon) {
+		let actualWeapon = this.currentPlayer.weapon;
+		let weapons = this.weapons.filter(function (weapon) {
+			return weapon.position !== newWeapon.position;
 		});
+		this.currentPlayer.weapon = newWeapon;
+		actualWeapon.position = this.currentPlayer.position;
+		weapons.push(actualWeapon);
+		this.weapons = weapons;
+		this.plateau.changeWeaponType(newWeapon, actualWeapon);
+		this.refreshPlayer();
 	}
 
 	getNewWeapon() {
-		let player = this.players[this.turnPlayerIndex];
-		let lightsaber = new Weapon('lightsaber', 50);
-		if (player.position == lightsaber.position) {
-			player.weapon = lightsaber;
+		let playerPosition = this.currentPlayer.position;
+		let weapon = this.weapons.filter(function (weapon) {
+			return weapon.position == playerPosition;
+		});
+		if (weapon.length) {
+			this.changeWeapon(weapon[0]);
 		}
 	}
 
 	isEnnemyClose() {
-		let player1 = this.players[0];
-		let player2 = this.players[1];
-
-		if (player1.position + 1 == player2.position) {
+		if (this.currentPlayer.position + 1 == this.otherPlayer.position) {
 			return true;
 		}
-		if (player1.position - 1 == player2.position) {
+		if (this.currentPlayer.position - 1 == this.otherPlayer.position) {
 			return true;
 		}
-		if (player1.position + 10 == player2.position) {
+		if (this.currentPlayer.position + 10 == this.otherPlayer.position) {
 			return true;
 		}
-		if (player1.position - 10 == player2.position) {
+		if (this.currentPlayer.position - 10 == this.otherPlayer.position) {
+			return true;
+		}
+		if (this.otherPlayer.position + 1 == this.currentPlayer.position) {
+			return true;
+		}
+		if (this.otherPlayer.position - 1 == this.currentPlayer.position) {
+			return true;
+		}
+		if (this.otherPlayer.position + 10 == this.currentPlayer.position) {
+			return true;
+		}
+		if (this.otherPlayer.position - 10 == this.currentPlayer.position) {
 			return true;
 		}
 		return false;
 	}
 
 	canMove(player) {
+		if (this.fighting) {
+			return false;
+		}
 		if (player.moveCount >= this.moveMaxAllowed) {
 			alert('le nombre max de déplacements tu as atteint');
 			return false;
@@ -121,37 +185,19 @@ class Game {
 		return true;
 	}
 
-	checkWhoCanMove() {
-		let player = this.players[this.turnPlayerIndex];
-
-		if (player.moveCount >= this.moveMaxAllowed) {
-			this.changePlayer();
-			player.resetMoveCount();
-		}
-	}
-
 	changePlayer() {
-		if (this.turnPlayerIndex === 0) {
-			this.turnPlayerIndex = 1;
-			$('#ATH1').addClass('ath');
-			$('#ATH0').removeClass('ath');
-			$('.jedi-cell').removeClass('jedi-cellBlink');
-			$('.sith-cell').addClass('sith-cellBlink');
-		} else {
+		if (this.turnPlayerIndex === 1) {
 			this.turnPlayerIndex = 0;
-			$('#ATH0').addClass('ath');
-			$('#ATH1').removeClass('ath');
-			$('.jedi-cell').addClass('jedi-cellBlink');
-			$('.sith-cell').removeClass('sith-cellBlink');
+		} else {
+			this.turnPlayerIndex = 1;
 		}
-	}
 
-	getPassivePlayer() {
-		let activePlayerIndex = this.turnPlayerIndex;
+		$('#' + this.currentPlayer.id).addClass('highlight-current-player');
+		$('#' + this.otherPlayer.id).removeClass('highlight-current-player');
 
-		if (activePlayerIndex === 0) {
-			return this.players[1];
-		}
-		return this.players[0];
+		$('.' + this.currentPlayer.id + '-cell').addClass(this.currentPlayer.id + '-cell-blink');
+		$('.' + this.otherPlayer.id + '-cell').removeClass(this.otherPlayer.id + '-cell-blink');
+
+		this.currentPlayer.resetMoveCount();
 	}
 }
