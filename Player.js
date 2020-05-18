@@ -35,7 +35,7 @@ class Player {
 			//si le joueur adverse se defend
 			nextPlayer.health = nextPlayer.health - currentPlayer.weapon.damage / 2;
 		}
-		$('#' + nextPlayer + ' #pb-player')
+		$('#' + nextPlayer.id + ' #pb-player')
 			.css('width', nextPlayer.health + '%')
 			.text(nextPlayer.health); // met a jour la barre de vie
 	}
@@ -84,7 +84,7 @@ class Player {
 		$('#pb-player' + nextPlayerNumber)
 			.text('0')
 			.css('width', '0%');
-		$('.showPlayer' + currentPlayerNumber).removeClass('highLight');
+		$('.showPlayer' + currentPlayerNumber).removeClass('highlight');
 		setTimeout(function () {
 			alert(`${this.name} a gagné le combat !`);
 		}, 1000);
