@@ -31,6 +31,11 @@ table {
 	background-size: 100% 100%;
 }
 
+.pistol-cell {
+	background-image: url('img/pistol.png');
+	background-size: 100% 100%;
+}
+
 .lightsaber-cell {
 	background-image: url('img/lightsaber.png');
 	background-size: 100% 100%;
@@ -67,11 +72,7 @@ table {
 	}
 }
 
-.jedi-cellBlink {
-	background-color: #03f417;
-	background-image: url('img/yoda.png');
-	background-size: 100% 100%;
-	position: relative;
+.jedi-cell-blink {
 	animation-name: jediBlink;
 	animation-duration: 0.5s;
 	animation-iteration-count: infinite;
@@ -92,10 +93,7 @@ table {
 	}
 }
 
-.sith-cellBlink {
-	background-color: red;
-	background-image: url('img/vador.png');
-	background-size: 100% 100%;
+.sith-cell-blink {
 	animation-name: sithBlink;
 	animation-duration: 0.5s;
 	animation-iteration-count: infinite;
@@ -121,7 +119,7 @@ table {
 	align-items: center;
 }
 
-.ath {
+.highlight-current-player {
 	background-color: rgb(90, 90, 90);
 }
 
@@ -153,8 +151,7 @@ img {
 	text-shadow: 1px 1px rgb(209, 217, 224);
 	color: #ff0000;
 }
-#currentWeaponP0,
-#currentWeaponP1 {
+.weapon {
 	text-align: center;
 	font-weight: bold;
 	font-size: 12px;
@@ -184,8 +181,7 @@ img {
 	width: 100%;
 }
 
-#movesP0,
-#movesP1 {
+.moves {
 	text-align: center;
 	font-weight: bold;
 	font-size: 12px;
@@ -207,7 +203,7 @@ img {
 	margin: 0;
 }
 
-#beforeGameStarts1 {
+#nameform1 {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -271,7 +267,7 @@ img {
 	font-size: 18px;
 }
 
-#beforeGameStarts2 {
+#nameform2 {
 	display: flex;
 	justify-content: center;
 	align-items: center;
