@@ -1,5 +1,5 @@
 let game = new Game();
-let playerId = 0;
+
 // $('.content').hide();
 // $('#enterButton').click(function () {
 // 	$('#music')[0].play();
@@ -10,11 +10,13 @@ let playerId = 0;
 $('.content').show();
 
 $('.nameForm').submit(function (e) {
-	playerId++;
 	e.preventDefault();
-	let side = $(this).attr('id');
-	let name = e.target.querySelector('.playerName').value;
-	let player = new Player(name, side, playerId);
+
+	let name = $(this).find('input[name="name"]').val();
+	let id = $(this).find('input[name="id"]').val();
+
+	let player = new Player(name, id);
+
 	game.addPlayer(player);
 	if (game.isReady()) {
 		game.start();
