@@ -30,29 +30,22 @@ class Game {
 		$('#' + this.currentPlayer.id + ' .showPlayer').addClass('highlight');
 
 		$('#' + this.currentPlayer.id + ' .Att').click(function () {
-			if (!this.otherPlayer.defend) {
-				//si le joueur adverse ne se defend pas
-				this.otherPlayer.health = this.otherPlayer.health - this.currentPlayer.weapon.damage;
-			} else {
-				//si le joueur adverse se defend
-				this.otherPlayer.health = this.otherPlayer.health - this.currentPlayer.weapon.damage / 2;
+			if (this.currentPlayer.canAttack()) {
+				this.currentPlayer.attack();
+				this.currentPlayer.resetAttackCount();
 			}
-			$('#' + this.otherPlayer.id + ' #pb-player')
-				.css('width', this.otherPlayer.health + '%')
-				.text(this.otherPlayer.health); // met a jour la barre de vie
+
+			if (this.otherPlayer.health > 0) {
+				this.currentPlayer.resetAttackCount();
+				this.changePlayer();
+			}
 		});
-
-		// if (this.player.canAttack()) {
-		// 	this.player.attack();
-		// 	this.player.resetAttackCount();
-		// }
-
-		// if (this.otherPlayer.health > 0) {
-		// 	this.player.resetAttackCount();
-		// 	this.changePlayer();
-		// } else {
-		// 	this.player.win();
-		// }
+		$('#' + this.currentPlayer.id + ' .Def').click(function () {
+			// si on se defend
+			this.currentPlayer.attackCount++;
+			this.currentPlayer.defend = true;
+			this.changePlayer();
+		});
 	}
 
 	addPlayer(player) {
