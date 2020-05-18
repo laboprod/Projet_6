@@ -1,6 +1,5 @@
 class Player {
 	name;
-	side;
 	weapon;
 	health;
 	attackCount;
@@ -9,26 +8,24 @@ class Player {
 	plateau;
 	position;
 	moveCount;
-	id;
 
-	constructor(name, side, playerId) {
+	constructor(name, id) {
 		this.name = name;
-		this.side = side;
-		this.weapon = new Weapon('pistol', 10);
+		this.id = id;
+		this.weapon = new Weapon('pistol', 10, 1);
 		this.health = 100;
 		this.attackCount = 0;
 		this.attack = false;
 		this.defend = true;
 		this.position = null;
 		this.moveCount = 0;
-		this.id = playerId;
 	}
 
 	attack() {
 		this.attack = true;
 		this.attackCount++;
 
-		let nextPlayer = game.getPassivePlayer();
+		let nextPlayer = game.otherPlayer;
 
 		if (!nextPlayer.defend) {
 			//si le joueur adverse ne se defend pas
@@ -49,35 +46,35 @@ class Player {
 		return true;
 	}
 
-	battle() {
-		let currentPlayerNumber = this.id;
-		let nextPlayer = game.getPassivePlayer();
+	// battle() {
+	// 	let currentPlayerNumber = this.id;
+	// 	let nextPlayer = game.otherPlayer();
 
-		// desactivateButtons();
+	// 	// desactivateButtons();
 
-		$('.showPlayer' + currentPlayerNumber).addClass('highLight'); // highlight en jaune les boutons du joueur qui joue
-		$('#player' + currentPlayerNumber + 'Att').click(function () {
-			this.attack = false;
+	// 	$('.showPlayer' + currentPlayerNumber).addClass('highLight'); // highlight en jaune les boutons du joueur qui joue
+	// 	$('#player' + currentPlayerNumber + 'Att').click(function () {
+	// 		this.attack = false;
 
-			if (this.canAttack()) {
-				this.attack();
-				this.resetAttackCount();
-			}
+	// 		if (this.currentPlayer.canAttack()) {
+	// 			this.currentPlayer.attack();
+	// 			this.currentPlayer.resetAttackCount();
+	// 		}
 
-			if (nextPlayer.health > 0) {
-				this.resetAttackCount();
-				game.changePlayer();
-			} else {
-				this.win();
-			}
-		});
-		$('#player' + currentPlayerNumber + 'Def').click(function () {
-			// si on se defend
-			this.attackCount++;
-			this.defend = true;
-			game.changePlayer();
-		});
-	}
+	// 		if (nextPlayer.health > 0) {
+	// 			this.resetAttackCount();
+	// 			game.changePlayer();
+	// 		} else {
+	// 			this.currentPlayer.win();
+	// 		}
+	// 	});
+	// 	$('#player' + currentPlayerNumber + 'Def').click(function () {
+	// 		// si on se defend
+	// 		this.attackCount++;
+	// 		this.defend = true;
+	// 		game.changePlayer();
+	// 	});
+	// }
 
 	win() {
 		let nextPlayerNumber = nextPlayer.id;
@@ -151,8 +148,8 @@ class Player {
 	}
 
 	desactivateButtons() {
-		$('#player' + this.side + 'Att', '#player' + this.side + 'Def').off('click');
-		$('.showPlayer' + this.side).removeClass('highLight');
+		$('#player' + this.id + 'Att', '#player' + this.id + 'Def').off('click');
+		$('.showPlayer' + this.id).removeClass('highLight');
 	}
 
 	moveDown() {
