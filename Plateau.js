@@ -159,12 +159,8 @@ class Plateau {
 	}
 
 	movePlayer(player, oldPosition) {
-		let oldCell = document.getElementById(oldPosition);
-		let newCell = document.getElementById(player.position);
-		oldCell.classList.remove(player.side + '-cell');
-		newCell.classList.add(player.side + '-cell');
-		oldCell.classList.remove(player.side + '-cellBlink');
-		newCell.classList.add(player.side + '-cellBlink');
+		$('#' + oldPosition).removeClass(player.id + '-cell-blink ' + player.id + '-cell');
+		$('#' + player.position).addClass(player.id + '-cell-blink ' + player.id + '-cell');
 	}
 
 	placeBlocks(qty) {
@@ -180,7 +176,7 @@ class Plateau {
 		let cell = this.findUsableCell();
 		this.playerCells.push(cell);
 		this.usedCells.push(cell);
-		this.colorize(cell, player.side + '-cell');
+		this.colorize(cell, player.id + '-cell');
 		player.place(cell, this);
 	}
 
@@ -190,6 +186,15 @@ class Plateau {
 		this.usedCells.push(cell);
 		this.colorize(cell, weapon.name + '-cell');
 		weapon.position = cell;
+	}
+
+	unColorize(id, cssClass) {
+		document.getElementById(id).classList.remove(cssClass);
+	}
+
+	changeWeaponType(oldWeapon, newWeapon) {
+		this.unColorize(oldWeapon.position, oldWeapon.name + '-cell');
+		this.colorize(newWeapon.position, newWeapon.name + '-cell');
 	}
 
 	// place(qty, type) {
