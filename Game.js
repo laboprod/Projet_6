@@ -27,6 +27,32 @@ class Game {
 
 	battle() {
 		this.fighting = true;
+		$('#' + this.currentPlayer.id + ' .showPlayer').addClass('highlight');
+
+		$('#' + this.currentPlayer.id + ' .Att').click(function () {
+			if (!this.otherPlayer.defend) {
+				//si le joueur adverse ne se defend pas
+				this.otherPlayer.health = this.otherPlayer.health - this.currentPlayer.weapon.damage;
+			} else {
+				//si le joueur adverse se defend
+				this.otherPlayer.health = this.otherPlayer.health - this.currentPlayer.weapon.damage / 2;
+			}
+			$('#' + this.otherPlayer.id + ' #pb-player')
+				.css('width', this.otherPlayer.health + '%')
+				.text(this.otherPlayer.health); // met a jour la barre de vie
+		});
+
+		// if (this.player.canAttack()) {
+		// 	this.player.attack();
+		// 	this.player.resetAttackCount();
+		// }
+
+		// if (this.otherPlayer.health > 0) {
+		// 	this.player.resetAttackCount();
+		// 	this.changePlayer();
+		// } else {
+		// 	this.player.win();
+		// }
 	}
 
 	addPlayer(player) {
@@ -116,9 +142,8 @@ class Game {
 		}
 	}
 
-	refreshPlayer() {
+	refreshWeapon() {
 		for (let player of this.players) {
-			$('#' + player.id + ' .playerName').text(player.name);
 			$('#' + player.id + ' .weapon').text('Arme : ' + player.weapon.name + ' - Dégâts : ' + player.weapon.damage);
 		}
 	}
@@ -133,7 +158,7 @@ class Game {
 		weapons.push(actualWeapon);
 		this.weapons = weapons;
 		this.plateau.changeWeaponType(newWeapon, actualWeapon);
-		this.refreshPlayer();
+		this.refreshWeapon();
 	}
 
 	getNewWeapon() {
