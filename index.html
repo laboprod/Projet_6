@@ -33,14 +33,15 @@
 			</h1>
 		</section> -->
 
-		<div class="content">
-			<div id="beforeGameStarts1">
-				<form class="form1 nameForm" id="jedi">
+		<div class="content registration">
+			<div id="nameform1">
+				<form class="form1 nameForm">
 					<h2>Jedi</h2>
 					<div class="input">
 						<div class="inputBox">
 							<label>Choisis ton nom</label>
-							<input type="text" id="player1Name" class="playerName" name="name" placeholder="Nom du joueur" />
+							<input type="text" class="playerName" name="name" placeholder="Nom du joueur" />
+							<input type="hidden" value="jedi" name="id" />
 						</div>
 						<div class="inputBox">
 							<input type="submit" class="playerInput" value="Je suis prêt" />
@@ -48,13 +49,15 @@
 					</div>
 				</form>
 			</div>
-			<div id="beforeGameStarts2">
-				<form class="form2 nameForm" id="sith">
+
+			<div id="nameform2">
+				<form class="form2 nameForm">
 					<h2>Sith</h2>
 					<div class="input">
 						<div class="inputBox">
 							<label>Choisis ton nom</label>
-							<input type="text" id="player2Name" class="playerName" name="name" placeholder="Nom du joueur" />
+							<input type="text" class="playerName" name="name" placeholder="Nom du joueur" />
+							<input type="hidden" value="sith" name="id" />
 						</div>
 						<div class="inputBox">
 							<input type="submit" class="playerInput" value="Je suis prêt" />
@@ -66,10 +69,10 @@
 
 		<div class="container" id="game">
 			<div class="row">
-				<div class="col-lg-3 col-sm-6" id="ATH0">
+				<div class="col-lg-3 col-sm-6" id="jedi">
 					<img src="img/player1.png" alt="" width="200" height="300" id="img-player1" />
-					<p id="showNamePlayer0">Player 1</p>
-					<p id="currentWeaponP0"></p>
+					<p class="playerName">Player 1</p>
+					<p class="weapon"></p>
 					<div class="showPlayer0">
 						<button type="button" class="btn btn-secondary btn-sm" id="player0Att">Attaquer</button>
 						<button type="button" class="btn btn-warning btn-sm" id="player0Def">Se défendre</button>
@@ -87,7 +90,7 @@
 							100
 						</div>
 					</div>
-					<p id="movesP0"></p>
+					<p class="moves"></p>
 				</div>
 				<div class="col-lg-6 col-sm-12">
 					<div id="container"></div>
@@ -95,10 +98,10 @@
 
 					<button value="Refresh Page" id="restartGame" onClick="location.href=location.href">Recommencer le jeu</button>
 				</div>
-				<div class="col-lg-3 col-sm-6" id="ATH1">
+				<div class="col-lg-3 col-sm-6" id="sith">
 					<img src="img/player2.png" alt="" width="200" height="300" id="img-player2" />
-					<p id="showNamePlayer1">Player 2</p>
-					<p id="currentWeaponP1"></p>
+					<p class="playerName">Player 2</p>
+					<p class="weapon"></p>
 					<div class="showPlayer1">
 						<button type="button" class="btn btn-secondary btn-sm" id="player1Att">Attaquer</button>
 						<button type="button" class="btn btn-warning btn-sm" id="player1Def">Se défendre</button>
@@ -116,7 +119,7 @@
 							100
 						</div>
 					</div>
-					<p id="movesP1"></p>
+					<p class="moves"></p>
 				</div>
 			</div>
 		</div>
