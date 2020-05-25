@@ -18,17 +18,17 @@
 			<audio src="theme.mp3" id="music" type="audio/mp3" preload></audio>
 			<video src="smoke.mp4" autoplay muted></video>
 			<h1>
-				<span>L</span>
-				<span>E</span>
-				<span>G</span>
-				<span>O </span>
+				<span>l</span>
+				<span>e</span>
+				<span>g</span>
+				<span>o </span>
 				<span>&nbsp;</span>
-				<span>W</span>
-				<span>A</span>
-				<span>R</span>
-				<span>S</span>
+				<span>w</span>
+				<span>a</span>
+				<span>r</span>
+				<span>s</span>
 				<div class="enter">
-					<input type="submit" id="enterButton" name="" value="COMMENCER" />
+					<input type="submit" id="enterButton" name="" value="commencer" />
 				</div>
 			</h1>
 		</section> -->
@@ -73,37 +73,60 @@
 					<img src="img/player1.png" alt="" width="200" height="300" id="img-player1" />
 					<p class="playerName">Player 1</p>
 					<p class="weapon"></p>
-					<div class="showPlayer">
-						<button type="button" class="btn btn-secondary btn-sm" class="Att">Attaquer</button>
-						<button type="button" class="btn btn-warning btn-sm" class="Def">Se défendre</button>
-					</div>
+					<div class="showPlayer"></div>
+
 					<div class="progress">
 						<div class="progress-bar" id="pb-player" role="progressbar" style="width: 100%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
 							100
 						</div>
 					</div>
 					<p class="moves"></p>
+					<p class="turn"></p>
 				</div>
 				<div class="col-lg-6 col-sm-12">
 					<div id="container"></div>
 					<div id="tableau"></div>
-
-					<button value="Refresh Page" id="restartGame" onClick="location.href=location.href">Recommencer le jeu</button>
+					<div id="weapons">
+						<figure>
+							<img src="img/pistol.png" width="50" height="50" />
+							<figcaption>dégâts 10</figcaption>
+						</figure>
+						<figure>
+							<img src="img/rifle.png" width="50" height="50" />
+							<figcaption>dégâts 20</figcaption>
+						</figure>
+						<figure>
+							<img src="img/canon.png" width="50" height="50" />
+							<figcaption>dégâts 30</figcaption>
+						</figure>
+						<figure>
+							<img src="img/sniper.png" width="50" height="50" />
+							<figcaption>dégats 40</figcaption>
+						</figure>
+						<figure>
+							<img src="img/lightsaber.png" width="50" height="50" />
+							<figcaption>dégats 50</figcaption>
+						</figure>
+					</div>
+					<p id="battle">battle !!</p>
+					<div id="btn">
+						<button type="button" class="btn btn-secondary btn-sm" id="Att">Attaquer</button>
+						<button type="button" class="btn btn-warning btn-sm" id="Def">Se défendre</button>
+						<button value="Refresh Page" id="restartGame" onClick="location.href=location.href">Refaire une partie</button>
+					</div>
 				</div>
 				<div class="col-lg-3 col-sm-6" id="sith">
 					<img src="img/player2.png" alt="" width="200" height="300" id="img-player2" />
 					<p class="playerName">Player 2</p>
 					<p class="weapon"></p>
-					<div class="showPlayer">
-						<button type="button" class="btn btn-secondary btn-sm" class="Att">Attaquer</button>
-						<button type="button" class="btn btn-warning btn-sm" class="Def">Se défendre</button>
-					</div>
+					<div class="showPlayer"></div>
 					<div class="progress">
 						<div class="progress-bar" id="pb-player" role="progressbar" style="width: 100%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
 							100
 						</div>
 					</div>
 					<p class="moves"></p>
+					<p class="turn"></p>
 				</div>
 			</div>
 		</div>
