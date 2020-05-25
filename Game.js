@@ -27,24 +27,46 @@ class Game {
 
 	battle() {
 		this.fighting = true;
-		$('#' + this.currentPlayer.id + ' .showPlayer').addClass('highlight');
+		$('.btn').hide();
+		$('#battle').fadeIn(3000);
+		$('#battle').fadeOut(3000);
+		$('.moves').fadeOut();
+		$('#container').fadeOut();
+		$('#weapons').fadeOut();
+		$('.btn').fadeIn(5000);
 
-		$('#' + this.currentPlayer.id + ' .Att').click(function () {
-			if (this.currentPlayer.canAttack()) {
-				this.currentPlayer.attack();
-				this.currentPlayer.resetAttackCount();
+		$('#' + this.currentPlayer.id + ' .showPlayer').addClass('highlight');
+		$('#' + this.otherPlayer.id + ' .showPlayer').removeClass('highlight');
+
+		$('#Att').click(function () {
+			game.currentPlayer.attackCount++;
+			game.currentPlayer.defend = false;
+
+			if (game.otherPlayer.defend === false) {
+				//si le joueur adverse ne se defend pas
+				game.otherPlayer.health = game.otherPlayer.health - game.currentPlayer.weapon.damage;
+			} else {
+				game.otherPlayer.health = game.otherPlayer.health - game.currentPlayer.weapon.damage / 2;
 			}
 
-			if (this.otherPlayer.health > 0) {
-				this.currentPlayer.resetAttackCount();
-				this.changePlayer();
+			$('#' + game.otherPlayer.id + ' #pb-player')
+				.css('width', game.otherPlayer.health + '%')
+				.text(game.otherPlayer.health);
+
+			if (game.otherPlayer.health > 0) {
+				game.currentPlayer.resetAttackCount();
+				game.changePlayer();
+			} else {
+				game.win();
 			}
 		});
-		$('#' + this.currentPlayer.id + ' .Def').click(function () {
+
+		$('#Def').click(function () {
 			// si on se defend
-			this.currentPlayer.attackCount++;
-			this.currentPlayer.defend = true;
-			this.changePlayer();
+			game.currentPlayer.attackCount++;
+			game.currentPlayer.defend = true;
+			game.changePlayer();
+			game.currentPlayer.resetAttackCount();
 		});
 	}
 
@@ -75,12 +97,13 @@ class Game {
 	highlightCurrentPlayer() {
 		$('#' + this.currentPlayer.id).addClass('highlight-current-player');
 		$('#' + this.currentPlayer.id + ' .moves').text('Reste : ' + (this.moveMaxAllowed - this.currentPlayer.moveCount) + ' déplacements ');
+		$('#' + this.currentPlayer.id + ' .turn').text('A toi de jouer !');
 	}
 
 	intro() {
-		$('#intro').hide();
 		// $('#music')[0].pause();
 		$('#game').fadeIn(2000); // affiche le jeu
+		$('.btn').hide();
 		$('#restartGame').hide(); // cache le bouton recommencer tant que la partie n'est pas fini
 	}
 
@@ -217,5 +240,37 @@ class Game {
 		$('.' + this.otherPlayer.id + '-cell').removeClass(this.otherPlayer.id + '-cell-blink');
 
 		this.currentPlayer.resetMoveCount();
+	}
+
+	changeFighter() {
+		if (this.turnPlayerIndex === 1) {
+			this.turnPlayerIndex = 0;
+		} else {
+			this.turnPlayerIndex = 1;
+		}
+
+		$('#' + this.currentPlayer.id).addClass('highlight-current-player');
+		$('#' + this.otherPlayer.id).removeClass('highlight-current-player');
+
+		$('#' + this.currentPlayer.id + ' .showPlayer').addClass('highlight');
+		$('#' + this.otherPlayer.id + ' .showPlayer').removeClass('highlight');
+
+		$('.' + this.currentPlayer.id + '-cell').addClass(this.currentPlayer.id + '-cell-blink');
+		$('.' + this.otherPlayer.id + '-cell').removeClass(this.otherPlayer.id + '-cell-blink');
+
+		this.currentPlayer.resetAttackCount();
+	}
+
+	win() {
+		$('#' + game.otherPlayer.id + ' #pb-player')
+			.text('0')
+			.css('width', '0%');
+		$('#' + this.currentPlayer.id + ' .showPlayer').removeClass('highlight');
+		setTimeout(function () {
+			alert(game.currentPlayer.name + ' a gagné le combat !');
+		}, 1000);
+		$('.btn').hide();
+		$('.turn').hide();
+		$('#restartGame').fadeIn(2000);
 	}
 }
