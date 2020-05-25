@@ -16,7 +16,7 @@ class Player {
 		this.health = 100;
 		this.attackCount = 0;
 		this.attack = false;
-		this.defend = true;
+		this.defend = false;
 		this.position = null;
 		this.moveCount = 0;
 	}
@@ -77,19 +77,19 @@ class Player {
 	// 	});
 	// }
 
-	win() {
-		let nextPlayerNumber = nextPlayer.id;
-		let currentPlayerNumber = this.id;
+	// win() {
+	// 	let nextPlayerNumber = nextPlayer.id;
+	// 	let currentPlayerNumber = this.id;
 
-		$('#pb-player' + nextPlayerNumber)
-			.text('0')
-			.css('width', '0%');
-		$('.showPlayer' + currentPlayerNumber).removeClass('highlight');
-		setTimeout(function () {
-			alert(`${this.name} a gagné le combat !`);
-		}, 1000);
-		$('#restartGame').show();
-	}
+	// 	$('#pb-player' + nextPlayerNumber)
+	// 		.text('0')
+	// 		.css('width', '0%');
+	// 	$('.showPlayer' + currentPlayerNumber).removeClass('highlight');
+	// 	setTimeout(function () {
+	// 		alert(`${this.name} a gagné le combat !`);
+	// 	}, 1000);
+	// 	$('#restartGame').show();
+	// }
 
 	canMoveDown() {
 		let cell = this.position;
