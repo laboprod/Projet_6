@@ -12,6 +12,16 @@
 	font-family: 'Motiva Sans', Sans-serif; 
 } */
 
+@font-face {
+	font-family: 'Starjedi';
+	src: url('font/Starjedi.ttf') format('truetype');
+}
+
+body {
+	font-family: 'Starjedi', sans-serif;
+	height: 100%;
+	overflow: hidden;
+}
 table td {
 	border: 1px solid black;
 	padding: 0;
@@ -128,29 +138,59 @@ table {
 	opacity: 0.8;
 	border-radius: 10%;
 }
+figure {
+	border: thin #c0c0c0 solid;
+	display: flex;
+	flex-flow: column;
+	padding: 5px;
+	max-width: 150px;
+	margin: auto;
+	align-items: center;
+	justify-content: center;
+}
 
-.btn {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	margin-left: 30px;
+figcaption {
+	text-align: center;
+}
+
+#weapons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+#battle {
+	display: flex;
+	margin-top: 50%;
+	justify-content: center;
+	align-items: center;
+	font-size: 75px;
+}
+
+#btn {
+	display: flex;
+	margin-top: 50%;
+	justify-content: center;
+	align-items: center;
+}
+#btn .btn {
+	display: flex;
+	justify-content: center;
+	margin-left: 40px;
+	margin-right: 40px;
+	width: 200px;
+	height: 100px;
 }
 img {
 	align-items: center;
 }
-#showNamePlayer0 {
+#game .playerName {
 	font-weight: bold;
 	font-size: 40px;
 	text-align: center;
 	text-shadow: 1px 1px rgb(209, 217, 224);
-	color: #03f417;
+	color: black;
 }
-#showNamePlayer1 {
-	font-weight: bold;
-	font-size: 40px;
-	text-align: center;
-	text-shadow: 1px 1px rgb(209, 217, 224);
-	color: #ff0000;
-}
+
 .weapon {
 	text-align: center;
 	font-weight: bold;
@@ -170,28 +210,27 @@ img {
 	width: 100%;
 }
 
-#pb-player1 {
-	padding: 6px 0px;
-	box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.08);
-	background-color: red;
-	border-radius: 4px;
-	border: 1px solid slategray;
-	transition: 0.4s linear;
-	transition-property: width, background-color;
-	width: 100%;
-}
-
 .moves {
 	text-align: center;
 	font-weight: bold;
-	font-size: 12px;
-	font-style: oblique;
-	color: #2a2e36;
+	font-size: 25px;
+
+	color: white;
+}
+.turn {
+	margin-top: 20px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 40px;
+	color: white;
 }
 
 #restartGame {
-	margin-left: 200px;
-	margin-bottom: 20px;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	width: 200px;
+	height: 100px;
 	background-color: #f49542;
 	border-radius: 4px;
 	border: 1px solid slategray;
@@ -223,8 +262,6 @@ img {
 .form1 h2 {
 	color: #03f417;
 	font-weight: 500;
-	text-transform: uppercase;
-	letter-spacing: 4px;
 }
 .form1 .input {
 	text-align: left;
@@ -249,19 +286,26 @@ img {
 	padding: 5px 15px;
 	color: #fff;
 	font-size: 18px;
-	color: #03f417;
+	color: #03f467;
 	box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 1), inset 2px 2px 6px rgba(0, 0, 0, 0.1);
 }
 .form1 .input .inputBox input[type='submit'] {
+	color: #333633;
 	cursor: pointer;
 	margin-top: 20px;
 	box-shadow: -2px -2px 6px rgba(255, 255, 255, 1), 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
+.form1 .input .inputBox input[type='submit']:focus {
+	color: #03f467;
+	margin-top: 20px;
+	box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 1), inset 2px 2px 6px rgba(0, 0, 0, 0.1);
 }
 .form1 .input .inputBox input[type='submit']:hover {
 	color: #03f467;
 	margin-top: 20px;
 	box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 1), inset 2px 2px 6px rgba(0, 0, 0, 0.1);
 }
+
 .form1 .input .inputBox input::placeholder {
 	color: #555;
 	font-size: 18px;
@@ -287,8 +331,6 @@ img {
 .form2 h2 {
 	color: #ff0000;
 	font-weight: 500;
-	text-transform: uppercase;
-	letter-spacing: 4px;
 }
 .form2 .input {
 	text-align: left;
@@ -314,15 +356,22 @@ img {
 	color: #fff;
 	font-size: 18px;
 	color: #ff0000;
+
 	box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
 .form2 .input .inputBox input[type='submit'] {
+	color: #333633;
 	cursor: pointer;
 	margin-top: 20px;
 	box-shadow: -2px -2px 6px rgba(255, 255, 255, 0.1), 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
+.form2 .input .inputBox input[type='submit']:focus {
+	color: #ff0000;
+	margin-top: 20px;
+	box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
 .form2 .input .inputBox input[type='submit']:hover {
-	color: #af1212;
+	color: #ff0000;
 	margin-top: 20px;
 	box-shadow: inset -2px -2px 6px rgba(255, 255, 255, 0.1), inset 2px 2px 6px rgba(0, 0, 0, 0.8);
 }
@@ -349,8 +398,6 @@ section h1 {
 	text-align: center;
 	color: #ddd;
 	font-size: 5em;
-	font-family: sans-serif;
-	letter-spacing: 0.2em;
 }
 h1 span {
 	opacity: 0;
