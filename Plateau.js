@@ -29,6 +29,15 @@ class Plateau {
 		return cell;
 	}
 
+	findFreeCellForPlayer() {
+		let cell = this.findFreeCell();
+
+		if (this.isNorthFree(cell) && this.isSouthFree(cell) && this.isWestFree(cell) && this.isEastFree(cell)) {
+			return cell;
+		}
+		return this.findFreeCellForPlayer();
+	}
+
 	findUsableCell() {
 		let cell = this.findFreeCell();
 
@@ -173,7 +182,7 @@ class Plateau {
 	}
 
 	placePlayer(player) {
-		let cell = this.findUsableCell();
+		let cell = this.findFreeCellForPlayer();
 		this.playerCells.push(cell);
 		this.usedCells.push(cell);
 		this.colorize(cell, player.id + '-cell');
