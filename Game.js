@@ -27,46 +27,17 @@ class Game {
 
 	battle() {
 		this.fighting = true;
-		$('.btn').hide();
-		$('#battle').fadeIn(3000);
-		$('#battle').fadeOut(3000);
-		$('.moves').fadeOut();
-		$('#container').fadeOut();
-		$('#weapons').fadeOut();
-		$('.btn').fadeIn(5000);
+		this.displayBattle();
 
-		$('#' + this.currentPlayer.id + ' .showPlayer').addClass('highlight');
-		$('#' + this.otherPlayer.id + ' .showPlayer').removeClass('highlight');
-
-		$('#Att').click(function () {
-			game.currentPlayer.attackCount++;
-			game.currentPlayer.defend = false;
-
-			if (game.otherPlayer.defend === false) {
-				//si le joueur adverse ne se defend pas
-				game.otherPlayer.health = game.otherPlayer.health - game.currentPlayer.weapon.damage;
-			} else {
-				game.otherPlayer.health = game.otherPlayer.health - game.currentPlayer.weapon.damage / 2;
-			}
-
-			$('#' + game.otherPlayer.id + ' #pb-player')
-				.css('width', game.otherPlayer.health + '%')
-				.text(game.otherPlayer.health);
-
-			if (game.otherPlayer.health > 0) {
-				game.currentPlayer.resetAttackCount();
-				game.changePlayer();
-			} else {
-				game.win();
-			}
+		$('#attackBtn').click(() => {
+			this.currentPlayer.attack(this.otherPlayer);
+			this.changePlayer();
 		});
 
-		$('#Def').click(function () {
+		$('#defenseBtn').click(() => {
 			// si on se defend
-			game.currentPlayer.attackCount++;
-			game.currentPlayer.defend = true;
-			game.changePlayer();
-			game.currentPlayer.resetAttackCount();
+			this.currentPlayer.defend();
+			this.changePlayer();
 		});
 	}
 
@@ -94,16 +65,22 @@ class Game {
 		}
 	}
 
-	highlightCurrentPlayer() {
-		$('#' + this.currentPlayer.id).addClass('highlight-current-player');
-		$('#' + this.currentPlayer.id + ' .moves').text('Reste : ' + (this.moveMaxAllowed - this.currentPlayer.moveCount) + ' déplacements ');
-		$('#' + this.currentPlayer.id + ' .turn').text('A toi de jouer !');
+	displayBattle() {
+		$('#rules').hide();
+		$('.btn').hide();
+		$('#battle').fadeIn(2000);
+		$('#battle').fadeOut(1000);
+		$('.moves').fadeOut();
+		$('#container').fadeOut();
+		$('#weapons').fadeOut();
+		$('.btn').fadeIn(1000);
 	}
 
 	intro() {
 		// $('#music')[0].pause();
 		$('#game').fadeIn(2000); // affiche le jeu
 		$('.btn').hide();
+		$('#battle').hide();
 		$('#restartGame').hide(); // cache le bouton recommencer tant que la partie n'est pas fini
 	}
 
@@ -120,13 +97,13 @@ class Game {
 		$('#nameform1').hide(); // cache la page où l'on choisi son nom
 		$('#nameform2').hide();
 
-		this.highlightCurrentPlayer();
+		this.currentPlayer.highlight();
 
 		document.addEventListener('keydown', (e) => this.listenForKeyStroke(e));
 	}
 
 	listenForKeyStroke(e) {
-		if (!this.canMove(this.currentPlayer)) {
+		if (!this.currentPlayer.canMove()) {
 			return;
 		}
 		switch (e.which) {
@@ -144,7 +121,7 @@ class Game {
 				break;
 		}
 
-		this.highlightCurrentPlayer();
+		this.currentPlayer.highlight();
 		this.getNewWeapon();
 
 		if (this.isEnnemyClose()) {
@@ -154,7 +131,7 @@ class Game {
 
 		if (this.currentPlayer.moveCount >= this.moveMaxAllowed) {
 			this.changePlayer();
-			this.highlightCurrentPlayer();
+			this.currentPlayer.highlight();
 		}
 	}
 
@@ -215,17 +192,6 @@ class Game {
 		return false;
 	}
 
-	canMove(player) {
-		if (this.fighting) {
-			return false;
-		}
-		if (player.moveCount >= this.moveMaxAllowed) {
-			alert('le nombre max de déplacements tu as atteint');
-			return false;
-		}
-		return true;
-	}
-
 	changePlayer() {
 		if (this.turnPlayerIndex === 1) {
 			this.turnPlayerIndex = 0;
@@ -240,37 +206,5 @@ class Game {
 		$('.' + this.otherPlayer.id + '-cell').removeClass(this.otherPlayer.id + '-cell-blink');
 
 		this.currentPlayer.resetMoveCount();
-	}
-
-	changeFighter() {
-		if (this.turnPlayerIndex === 1) {
-			this.turnPlayerIndex = 0;
-		} else {
-			this.turnPlayerIndex = 1;
-		}
-
-		$('#' + this.currentPlayer.id).addClass('highlight-current-player');
-		$('#' + this.otherPlayer.id).removeClass('highlight-current-player');
-
-		$('#' + this.currentPlayer.id + ' .showPlayer').addClass('highlight');
-		$('#' + this.otherPlayer.id + ' .showPlayer').removeClass('highlight');
-
-		$('.' + this.currentPlayer.id + '-cell').addClass(this.currentPlayer.id + '-cell-blink');
-		$('.' + this.otherPlayer.id + '-cell').removeClass(this.otherPlayer.id + '-cell-blink');
-
-		this.currentPlayer.resetAttackCount();
-	}
-
-	win() {
-		$('#' + game.otherPlayer.id + ' #pb-player')
-			.text('0')
-			.css('width', '0%');
-		$('#' + this.currentPlayer.id + ' .showPlayer').removeClass('highlight');
-		setTimeout(function () {
-			alert(game.currentPlayer.name + ' a gagné le combat !');
-		}, 1000);
-		$('.btn').hide();
-		$('.turn').hide();
-		$('#restartGame').fadeIn(2000);
 	}
 }
