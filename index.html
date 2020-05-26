@@ -86,6 +86,9 @@
 				<div class="col-lg-6 col-sm-12">
 					<div id="container"></div>
 					<div id="tableau"></div>
+					<div id="rules">
+						Règles du jeu : - déplaces toi avec les fleches du clavier - si les 2 joueurs sont cotes a cotes, le combat commence
+					</div>
 					<div id="weapons">
 						<figure>
 							<img src="img/pistol.png" width="50" height="50" />
@@ -110,8 +113,8 @@
 					</div>
 					<p id="battle">battle !!</p>
 					<div id="btn">
-						<button type="button" class="btn btn-secondary btn-sm" id="Att">Attaquer</button>
-						<button type="button" class="btn btn-warning btn-sm" id="Def">Se défendre</button>
+						<button type="button" class="btn btn-secondary btn-sm" id="attackBtn">Attaquer</button>
+						<button type="button" class="btn btn-warning btn-sm" id="defenseBtn">Se défendre</button>
 						<button value="Refresh Page" id="restartGame" onClick="location.href=location.href">Refaire une partie</button>
 					</div>
 				</div>
@@ -145,7 +148,6 @@
 		<script src="Game.js"></script>
 		<script src="Player.js"></script>
 		<script src="Plateau.js"></script>
-		<script src="move.js"></script>
 		<script src="Weapon.js"></script>
 		<script src="main.js"></script>
 	</body>
