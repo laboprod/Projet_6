@@ -39,7 +39,7 @@ class Player {
 			otherPlayer.health = 0;
 		}
 
-		$('#' + otherPlayer.id + ' #pb-player')
+		$('#' + otherPlayer.id + ' #progress-bar')
 			.css('width', otherPlayer.health + '%')
 			.text(otherPlayer.health);
 
