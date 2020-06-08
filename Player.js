@@ -19,12 +19,6 @@ class Player {
 		this.moveCount = 0;
 	}
 
-	defend() {
-		this.attackCount++;
-		this.defending = true;
-		this.resetAttackCount();
-	}
-
 	attack(otherPlayer) {
 		this.attackCount++;
 		this.defending = false;
@@ -115,6 +109,12 @@ class Player {
 		}
 
 		return true;
+	}
+
+	defend() {
+		this.attackCount++;
+		this.defending = true;
+		this.resetAttackCount();
 	}
 
 	highlight() {
