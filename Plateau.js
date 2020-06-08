@@ -97,25 +97,25 @@ class Plateau {
 	// }
 
 	getCellDown(cell) {
-		let cellDown = this.cellId(cell.x, cell.y + 1);
+		let cellDown = this.cellId(cell.x + 1, cell.y);
 
 		return cellDown;
 	}
 
 	getCellLeft(cell) {
-		let cellLeft = this.cellId(cell.x - 1, cell.y);
+		let cellLeft = this.cellId(cell.x, cell.y - 1);
 
 		return cellLeft;
 	}
 
 	getCellRight(cell) {
-		let cellRight = this.cellId(cell.x + 1, cell.y);
+		let cellRight = this.cellId(cell.x, cell.y + 1);
 
 		return cellRight;
 	}
 
 	getCellUp(cell) {
-		let cellUp = this.cellId(cell.x, cell.y - 1);
+		let cellUp = this.cellId(cell.x - 1, cell.y);
 
 		return cellUp;
 	}
