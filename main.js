@@ -1,4 +1,4 @@
-let game = new Game();
+let game = new Game(4);
 
 // $('.content').hide();
 // $('#intro').show();
