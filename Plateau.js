@@ -12,25 +12,46 @@ class Plateau {
 		this.game = game;
 	}
 
-	cellId(x, y) {
-		return $(`.cell[data-x=${x}][data-y=${y}]`);
-	}
-
 	changeWeaponType(oldWeapon, newWeapon) {
-		this.unColorize(oldWeapon.position, oldWeapon.name + '-cell');
-		this.colorize(newWeapon.position, newWeapon.name + '-cell');
+		oldWeapon.position.cellDom.removeClass(oldWeapon.name + '-cell');
+		newWeapon.position.cellDom.addClass(newWeapon.name + '-cell');
+		// this.unColorize(oldWeapon.position, oldWeapon.name + '-cell');
+		// this.colorize(newWeapon.position, newWeapon.name + '-cell');
 	}
 
-	// colorize(id, cssClass) {
-	// 	document.getElementsByClassName(id).classList.add(cssClass);
-	// }
+	colorize(cell, cssClass) {
+		cell.cellDom.addClass(cssClass);
+	}
+
+	isCellUsed(cell) {
+		let existingCells = this.usedCells.filter((cellule) => {
+			return cell.x == cellule.x && cellule.y == cell.y;
+		});
+
+		if (existingCells.length > 0) {
+			return true;
+		}
+		return false;
+	}
+
+	isBlockCellUsed(cell) {
+		let existingCells = this.blockCells.filter((cellule) => {
+			return cell.x == cellule.x && cellule.y == cell.y;
+		});
+
+		if (existingCells.length > 0) {
+			return true;
+		}
+		return false;
+	}
 
 	findFreeCell() {
 		let x = Math.floor(Math.random() * this.rowsQty);
 		let y = Math.floor(Math.random() * this.colsQty);
-		let cell = this.cellId(x, y);
 
-		if (this.usedCells.includes(cell)) {
+		let cell = new Cell(x, y);
+
+		if (this.isCellUsed(cell)) {
 			return this.findFreeCell();
 		}
 		return cell;
@@ -70,10 +91,10 @@ class Plateau {
 		let $plateauContainer = $('#tableau');
 		let $table = $('<table></table>');
 
-		for (let x = 0; x < this.rowsQty; x++) {
+		for (let y = 0; y < this.rowsQty; y++) {
 			let $row = $('<tr class="line"></tr>');
 
-			for (let y = 0; y < this.colsQty; y++) {
+			for (let x = 0; x < this.colsQty; x++) {
 				let $cell = $(`<td data-x=${x} data-y=${y} class="cell"></td>`);
 				$row.append($cell);
 			}
@@ -96,69 +117,66 @@ class Plateau {
 	// 	document.getElementById('container').innerHTML = tableau;
 	// }
 
-	getCellDown(cell) {
-		let cellDown = this.cellId(cell.x + 1, cell.y);
+	// getCellDown(cell) {
+	// 	let cellDown = this.cellId(cell.x + 1, cell.y);
 
-		return cellDown;
-	}
+	// 	return cellDown;
+	// }
 
-	getCellLeft(cell) {
-		let cellLeft = this.cellId(cell.x, cell.y - 1);
+	// getCellLeft(cell) {
+	// 	let cellLeft = this.cellId(cell.x, cell.y - 1);
 
-		return cellLeft;
-	}
+	// 	return cellLeft;
+	// }
 
-	getCellRight(cell) {
-		let cellRight = this.cellId(cell.x, cell.y + 1);
+	// getCellRight(cell) {
+	// 	let cellRight = this.cellId(cell.x, cell.y + 1);
 
-		return cellRight;
-	}
+	// 	return cellRight;
+	// }
 
-	getCellUp(cell) {
-		let cellUp = this.cellId(cell.x - 1, cell.y);
+	// getCellUp(cell) {
+	// 	let cellUp = this.cellId(cell.x - 1, cell.y);
 
-		return cellUp;
-	}
+	// 	return cellUp;
+	// }
 
 	isEastFree(cell) {
-		let eastCell = this.getCellRight(cell);
-
-		if (this.usedCells.includes(eastCell)) {
+		if (cell.east.y > this.maxColValue) {
 			return false;
 		}
+
 		return true;
 	}
 
 	isNorthFree(cell) {
-		let northCell = this.getCellUp(cell);
-
-		if (this.usedCells.includes(northCell)) {
+		if (cell.north.y < 0) {
 			return false;
 		}
+
+		// if (this.usedCells.includes(northCell)) {
+		// 	return false;
+		// }
 		return true;
 	}
 
 	isSouthFree(cell) {
-		let southCell = this.getCellDown(cell);
-
-		if (this.usedCells.includes(southCell)) {
+		if (cell.south.x > this.maxRowValue) {
 			return false;
 		}
 		return true;
 	}
 
 	isWestFree(cell) {
-		let westCell = this.getCellLeft(cell);
-
-		if (this.usedCells.includes(westCell)) {
+		if (cell.west.y < 0) {
 			return false;
 		}
 		return true;
 	}
 
 	movePlayer(player, oldPosition) {
-		$('#' + oldPosition).removeClass(player.id + '-cell-blink ' + player.id + '-cell');
-		$('#' + player.position).addClass(player.id + '-cell-blink ' + player.id + '-cell');
+		oldPosition.cellDom.removeClass(player.id + '-cell-blink ' + player.id + '-cell');
+		player.position.cellDom.addClass(player.id + '-cell-blink ' + player.id + '-cell');
 	}
 
 	placeBlocks(qty) {
@@ -166,8 +184,8 @@ class Plateau {
 			let cell = this.findFreeCell();
 			this.blockCells.push(cell);
 			this.usedCells.push(cell);
-			// this.colorize(cell, 'block-cell');
-			cell.addClass('block-cell');
+			this.colorize(cell, 'block-cell');
+			// cell.cellDom.addClass('block-cell');
 		}
 	}
 
@@ -175,7 +193,7 @@ class Plateau {
 		let cell = this.findFreeCellForPlayer();
 		this.playerCells.push(cell);
 		this.usedCells.push(cell);
-		cell.addClass(player.id + '-cell');
+		cell.cellDom.addClass(player.id + '-cell');
 		// this.colorize(cell, player.id + '-cell');
 		player.place(cell, this);
 	}
@@ -184,12 +202,13 @@ class Plateau {
 		let cell = this.findUsableCell();
 		this.weaponCells.push(cell);
 		this.usedCells.push(cell);
+		cell.cellDom.addClass(weapon.name + '-cell');
 		// this.colorize(cell, weapon.name + '-cell');
 		weapon.position = cell;
 	}
 
-	unColorize(id, cssClass) {
-		document.getElementById(id).classList.remove(cssClass);
+	uncolorize(cell, cssClass) {
+		cell.cellDom.removeClass(cssClass);
 	}
 
 	// place(qty, type) {
