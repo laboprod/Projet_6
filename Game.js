@@ -85,7 +85,7 @@ class Game {
 		$('#battle').fadeIn(2000);
 		$('#battle').fadeOut(1000);
 		$('.moves').fadeOut();
-		$('#container').fadeOut();
+		$('#tableau').fadeOut();
 		$('#weapons').fadeOut();
 		$('.btn').fadeIn(1000);
 	}
@@ -119,8 +119,10 @@ class Game {
 
 	getNewWeapon() {
 		let playerPosition = this.currentPlayer.position;
+		console.log(playerPosition);
+
 		let weapon = this.weapons.filter(function (weapon) {
-			return weapon.position == playerPosition;
+			return weapon.position.x == playerPosition.x && weapon.position.y == playerPosition.y;
 		});
 		if (weapon.length) {
 			this.changeWeapon(weapon[0]);
@@ -128,30 +130,22 @@ class Game {
 	}
 
 	isEnnemyClose() {
-		if (this.currentPlayer.position + 1 == this.otherPlayer.position) {
+		let currentPlayerCell = this.currentPlayer.position;
+		let otherPlayerCell = this.otherPlayer.position;
+
+		if (currentPlayerCell.y + 1 == otherPlayerCell.y && currentPlayerCell.x == otherPlayerCell.x) {
 			return true;
 		}
-		if (this.currentPlayer.position - 1 == this.otherPlayer.position) {
+		if (currentPlayerCell.y - 1 == otherPlayerCell.y && currentPlayerCell.x == otherPlayerCell.x) {
 			return true;
 		}
-		if (this.currentPlayer.position + 10 == this.otherPlayer.position) {
+		if (currentPlayerCell.x + 1 == otherPlayerCell.x && currentPlayerCell.y == otherPlayerCell.y) {
 			return true;
 		}
-		if (this.currentPlayer.position - 10 == this.otherPlayer.position) {
+		if (currentPlayerCell.x - 1 == otherPlayerCell.x && currentPlayerCell.y == otherPlayerCell.y) {
 			return true;
 		}
-		if (this.otherPlayer.position + 1 == this.currentPlayer.position) {
-			return true;
-		}
-		if (this.otherPlayer.position - 1 == this.currentPlayer.position) {
-			return true;
-		}
-		if (this.otherPlayer.position + 10 == this.currentPlayer.position) {
-			return true;
-		}
-		if (this.otherPlayer.position - 10 == this.currentPlayer.position) {
-			return true;
-		}
+
 		return false;
 	}
 
