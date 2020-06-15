@@ -57,12 +57,13 @@ class Player {
 	canMoveDown() {
 		let cell = this.position;
 
-		if (cell % 10 === 9) {
+		if (cell.south.y > this.plateau.maxRowValue) {
 			return false;
 		}
-		let southCell = this.plateau.getCellDown(cell);
 
-		if (this.plateau.blockCells.includes(String(southCell))) {
+		let southCell = cell.south;
+
+		if (this.plateau.isBlockCellUsed(southCell)) {
 			return false;
 		}
 		return true;
@@ -71,12 +72,13 @@ class Player {
 	canMoveLeft() {
 		let cell = this.position;
 
-		if (cell <= String('0') + 9) {
+		if (cell.west.x < 0) {
 			return false;
 		}
-		let westCell = this.plateau.getCellLeft(cell);
 
-		if (this.plateau.blockCells.includes(String(westCell))) {
+		let westCell = cell.west;
+
+		if (this.plateau.isBlockCellUsed(westCell)) {
 			return false;
 		}
 		return true;
@@ -85,26 +87,38 @@ class Player {
 	canMoveRight() {
 		let cell = this.position;
 
-		if (cell >= 9 + String('0')) {
+		if (cell.east.x > this.plateau.maxColValue) {
 			return false;
 		}
-		let eastCell = this.plateau.getCellRight(cell);
+		let eastCell = cell.east;
 
-		if (this.plateau.blockCells.includes(String(eastCell))) {
+		if (this.plateau.isBlockCellUsed(eastCell)) {
 			return false;
 		}
 		return true;
+		// let cell = this.position;
+
+		// if (cell >= 9 + String('0')) {
+		// 	return false;
+		// }
+		// let eastCell = this.plateau.getCellRight(cell);
+
+		// if (this.plateau.blockCells.includes(String(eastCell))) {
+		// 	return false;
+		// }
+		// return true;
 	}
 
 	canMoveUp() {
 		let cell = this.position;
 
-		if (cell % 10 === 0) {
+		if (cell.north.y < 0) {
 			return false;
 		}
-		let northCell = this.plateau.getCellUp(cell);
 
-		if (this.plateau.blockCells.includes(String(northCell))) {
+		let northCell = cell.north;
+
+		if (this.plateau.isBlockCellUsed(northCell)) {
 			return false;
 		}
 
@@ -129,7 +143,7 @@ class Player {
 			return;
 		}
 		let oldPosition = this.position;
-		let newPosition = this.plateau.getCellDown(oldPosition);
+		let newPosition = oldPosition.south;
 		this.position = newPosition;
 		this.moveCount++;
 		this.plateau.movePlayer(this, oldPosition);
@@ -141,7 +155,7 @@ class Player {
 			return;
 		}
 		let oldPosition = this.position;
-		let newPosition = this.plateau.getCellLeft(oldPosition);
+		let newPosition = oldPosition.west;
 		this.position = newPosition;
 		this.moveCount++;
 		this.plateau.movePlayer(this, oldPosition);
@@ -153,7 +167,7 @@ class Player {
 			return;
 		}
 		let oldPosition = this.position;
-		let newPosition = this.plateau.getCellRight(oldPosition);
+		let newPosition = oldPosition.east;
 		this.position = newPosition;
 		this.moveCount++;
 		this.plateau.movePlayer(this, oldPosition);
@@ -165,7 +179,7 @@ class Player {
 			return;
 		}
 		let oldPosition = this.position;
-		let newPosition = this.plateau.getCellUp(oldPosition);
+		let newPosition = oldPosition.north;
 		this.position = newPosition;
 		this.moveCount++;
 		this.plateau.movePlayer(this, oldPosition);
