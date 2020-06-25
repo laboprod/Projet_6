@@ -1,20 +1,6 @@
-/* h1 {
-	background-image: url('img/banniere2.png');
-	background-size: 100% 100%;
-	height: 300px;
-	margin: 0;
-	/* background-color: #729bec;
-	color: #020303;
-	padding: 20px;
-	text-align: center;
-	border-bottom: 4px #c6d4df solid;
-	margin-bottom: 10px;
-	font-family: 'Motiva Sans', Sans-serif; 
-} */
-
 @font-face {
 	font-family: 'Starjedi';
-	src: url('font/Starjedi.ttf') format('truetype');
+	src: url('../font/Starjedi.ttf') format('truetype');
 }
 
 #rules {
@@ -26,7 +12,7 @@
 body {
 	font-family: 'Starjedi', sans-serif;
 	height: 100%;
-	/* overflow: hidden; */
+	overflow: hidden;
 }
 
 td.cell {
@@ -36,12 +22,6 @@ td.cell {
 	height: 50px;
 }
 
-/* table td {
-	border: 1px solid black;
-	padding: 0;
-	width: 50px;
-	height: 50px;
-} */
 table {
 	margin: auto;
 	margin-top: 20px;
@@ -51,38 +31,38 @@ table {
 }
 
 .block-cell {
-	background-image: url('img/brick.png');
+	background-image: url('../img/brick.png');
 	background-size: 100% 100%;
 }
 
 .pistol-cell {
-	background-image: url('img/pistol.png');
+	background-image: url('../img/pistol.png');
 	background-size: 100% 100%;
 }
 
 .lightsaber-cell {
-	background-image: url('img/lightsaber.png');
+	background-image: url('../img/lightsaber.png');
 	background-size: 100% 100%;
 }
 
 .rifle-cell {
-	background-image: url('img/rifle.png');
+	background-image: url('../img/rifle.png');
 	background-size: 100% 100%;
 }
 
 .canon-cell {
-	background-image: url('img/canon.png');
+	background-image: url('../img/canon.png');
 	background-size: 100% 100%;
 }
 
 .sniper-cell {
-	background-image: url('img/sniper.png');
+	background-image: url('../img/sniper.png');
 	background-size: 100% 100%;
 }
 
 .jedi-cell {
 	background-color: #03f417;
-	background-image: url('img/yoda.png');
+	background-image: url('../img/yoda.png');
 	background-size: 100% 100%;
 	position: relative;
 }
@@ -104,7 +84,7 @@ table {
 
 .sith-cell {
 	background-color: red;
-	background-image: url('img/vador.png');
+	background-image: url('../img/vador.png');
 	background-size: 100% 100%;
 }
 
@@ -133,12 +113,12 @@ table {
 }
 
 .player1 {
-	background-image: url('pics/player1.png');
+	background-image: url('../img/player1.png');
 	background-size: 100% 100%;
 	align-items: center;
 }
 .player2 {
-	background-image: url('pics/player2.png');
+	background-image: url('../img/player2.png');
 	background-size: 100% 100%;
 	align-items: center;
 }
