@@ -6,7 +6,6 @@ class Game {
 		this.weapons = [];
 		this.turnPlayerIndex = 0;
 		this.moveMaxAllowed = 3;
-		this.plateau = null;
 		this.fighting = false;
 		this.possibleWeapons = ['rifle', 'canon', 'sniper', 'lightsaber'];
 	}
@@ -37,7 +36,6 @@ class Game {
 		});
 
 		$('#defenseBtn').click(() => {
-			// si on se defend
 			this.currentPlayer.defend();
 			this.changePlayer();
 		});
@@ -55,12 +53,6 @@ class Game {
 
 		$(`.${this.currentPlayer.id}-cell`).addClass(`${this.currentPlayer.id}-cell-blink`);
 		$(`.${this.otherPlayer.id}-cell`).removeClass(`${this.otherPlayer.id}-cell-blink`);
-
-		// $('#' + this.currentPlayer.id).addClass('highlight-current-player');
-		// $('#' + this.otherPlayer.id).removeClass('highlight-current-player');
-
-		// $('.' + this.currentPlayer.id + '-cell').addClass(this.currentPlayer.id + '-cell-blink');
-		// $('.' + this.otherPlayer.id + '-cell').removeClass(this.otherPlayer.id + '-cell-blink');
 
 		this.currentPlayer.resetMoveCount();
 	}
@@ -99,8 +91,6 @@ class Game {
 		for (let player of this.players) {
 			$(`#${player.id} .playerName`).text(player.name);
 			$(`#${player.id} .weapon`).text(`Arme : ${player.weapon.name} - Dégâts : ${player.weapon.damage}`);
-			// $('#' + player.id + ' .playerName').text(player.name);
-			// $('#' + player.id + ' .weapon').text('Arme : ' + player.weapon.name + ' - Dégâts : ' + player.weapon.damage);
 
 			this.plateau.placePlayer(player);
 		}
@@ -126,7 +116,6 @@ class Game {
 
 	getNewWeapon() {
 		let playerPosition = this.currentPlayer.position;
-		console.log(playerPosition);
 
 		let weapon = this.weapons.filter(function (weapon) {
 			return weapon.position.x == playerPosition.x && weapon.position.y == playerPosition.y;
@@ -161,11 +150,11 @@ class Game {
 	}
 
 	intro() {
-		// $('#music')[0].pause();
-		$('#game').fadeIn(2000); // affiche le jeu
+		$('#music')[0].pause();
+		$('#game').fadeIn(2000);
 		$('.btn').hide();
 		$('#battle').hide();
-		$('#restartGame').hide(); // cache le bouton recommencer tant que la partie n'est pas fini
+		$('#restartGame').hide();
 	}
 
 	listenForKeyStroke(e) {
@@ -204,22 +193,21 @@ class Game {
 	refreshWeapon() {
 		for (let player of this.players) {
 			$(`#${player.id} .weapon`).text(`Arme : ${player.weapon.name} - Dégâts : ${player.weapon.damage}`);
-			// $('#' + player.id + ' .weapon').text('Arme : ' + player.weapon.name + ' - Dégâts : ' + player.weapon.damage);
 		}
 	}
 
 	start() {
 		this.intro();
 
-		this.plateau = new Plateau(10, 10, this); //initialiser le plateau avec 10 rangées et 10 colonnes.
+		this.plateau = new Plateau(10, 10);
 		this.plateau.generer();
-		this.plateau.placeBlocks(10); // cree 10 cases grises
+		this.plateau.placeBlocks(10);
 
 		this.createWeapons();
 		this.displayWeapons();
 		this.displayPlayers();
 
-		$('#nameform1').hide(); // cache la page où l'on choisi son nom
+		$('#nameform1').hide();
 		$('#nameform2').hide();
 
 		this.currentPlayer.highlight();
