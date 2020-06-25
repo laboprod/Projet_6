@@ -1,30 +1,18 @@
 class Player {
-	name;
-	weapon;
-	health;
-	attackCount;
-	defending;
-	plateau;
-	position;
-	moveCount;
-
 	constructor(name, id) {
 		this.name = name;
 		this.id = id;
 		this.weapon = new Weapon('pistol', 10);
 		this.health = 100;
-		this.attackCount = 0;
 		this.defending = false;
 		this.position = null;
 		this.moveCount = 0;
 	}
 
 	attack(otherPlayer) {
-		this.attackCount++;
 		this.defending = false;
 
 		if (!otherPlayer.defending) {
-			//si le joueur adverse ne se defend pas
 			otherPlayer.health = otherPlayer.health - this.weapon.damage;
 		} else {
 			otherPlayer.health = otherPlayer.health - this.weapon.damage / 2;
@@ -35,15 +23,10 @@ class Player {
 
 		$(`#${otherPlayer.id} #progress-bar`).css('width', `${otherPlayer.health}%`).text(otherPlayer.health);
 
-		// $('#' + otherPlayer.id + ' #progress-bar')
-		// 	.css('width', otherPlayer.health + '%')
-		// 	.text(otherPlayer.health);
-
 		if (otherPlayer.health == 0) {
 			this.win();
 			return;
 		}
-		this.resetAttackCount();
 	}
 
 	canMove() {
@@ -98,17 +81,6 @@ class Player {
 			return false;
 		}
 		return true;
-		// let cell = this.position;
-
-		// if (cell >= 9 + String('0')) {
-		// 	return false;
-		// }
-		// let eastCell = this.plateau.getCellRight(cell);
-
-		// if (this.plateau.blockCells.includes(String(eastCell))) {
-		// 	return false;
-		// }
-		// return true;
 	}
 
 	canMoveUp() {
@@ -128,18 +100,13 @@ class Player {
 	}
 
 	defend() {
-		this.attackCount++;
 		this.defending = true;
-		this.resetAttackCount();
 	}
 
 	highlight() {
 		$(`#${this.id}`).addClass('highlight-current-player');
 		$(`#${this.id} .moves`).text(`Reste : ${game.moveMaxAllowed - this.moveCount} déplacements `);
 		$(`#${this.id} .turn`).text('A toi de jouer !');
-		// $('#' + this.id).addClass('highlight-current-player');
-		// $('#' + this.id + ' .moves').text('Reste : ' + (game.moveMaxAllowed - this.moveCount) + ' déplacements ');
-		// $('#' + this.id + ' .turn').text('A toi de jouer !');
 	}
 
 	moveDown() {
@@ -193,10 +160,6 @@ class Player {
 	place(cell, plateau) {
 		this.position = cell;
 		this.plateau = plateau;
-	}
-
-	resetAttackCount() {
-		this.attackCount = 0;
 	}
 
 	resetMoveCount() {
