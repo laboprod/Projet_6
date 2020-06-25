@@ -1,13 +1,13 @@
-let game = new Game(4);
+let game = new Game();
 
-// $('.content').hide();
-// $('#intro').show();
+$('.content').hide();
+$('#intro').show();
 
-// $('#enterButton').click(function () {
-// 	$('#music')[0].play();
-// 	$('#intro').hide();
-// 	$('.content').show();
-// });
+$('#enterButton').click(function () {
+	$('#music')[0].play();
+	$('#intro').hide();
+	$('.content').show();
+});
 
 $('.nameForm').submit(function (e) {
 	e.preventDefault();
