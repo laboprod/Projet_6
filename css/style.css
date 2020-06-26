@@ -110,6 +110,7 @@ table {
 #game {
 	display: none;
 	border: 1px solid slategray;
+	margin-top: 50px;
 }
 
 .player1 {
@@ -128,26 +129,6 @@ table {
 	height: 100%;
 }
 
-figure {
-	border: thin #c0c0c0 solid;
-	display: flex;
-	flex-flow: column;
-	padding: 5px;
-	max-width: 150px;
-	margin: auto;
-	align-items: center;
-	justify-content: center;
-}
-
-figcaption {
-	text-align: center;
-}
-
-#weapons {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
 #battle {
 	display: flex;
 	margin-top: 50%;
@@ -378,6 +359,9 @@ section {
 }
 video {
 	object-fit: cover;
+	justify-content: center;
+	width: 100%;
+	height: 100vh;
 }
 section h1 {
 	position: absolute;
