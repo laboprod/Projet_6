@@ -1,5 +1,3 @@
-# Projet_6
-
 Ce projet consistera à créer un jeu en ligne en JavaScript dans lequel 2 joueurs évoluent chacun leur tour pour s'affronter. Comme dans Highlander, il ne peut en rester qu'un !
 
 Etape 1 : génération de la carte
